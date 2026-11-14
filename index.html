@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>顔写真MBTI診断</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#FFF8EE; --bg2:#FFF1DC; --card:#FFFFFF; --card2:#FFF6E8;
+--ink:#2B2118; --ink2:#6B5D4F; --line:#F0DEC3;
+--coral:#FF6B4A; --coral-d:#E84E2C; --teal:#0FB5A6; --teal-d:#078A7E;
+--yellow:#FFC531; --pink:#FF7AA8; --blue:#4A90D9;
+--shadow:0 10px 30px rgba(90,55,10,.10);
+--radius:20px;
+}
+@media (prefers-color-scheme: dark){
+:root{
+--bg:#1C1712; --bg2:#241C15; --card:#2A211A; --card2:#33281E;
+--ink:#FFF3E2; --ink2:#CBBBA6; --line:#4A3A2A;
+--shadow:0 10px 30px rgba(0,0,0,.35);
+}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"M PLUS Rounded 1c",system-ui,-apple-system,"Hiragino Maru Gothic ProN",sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:880px;margin:0 auto;padding:0 18px 56px}
+/* HERO */
+.hero{padding:34px 0 8px;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:var(--bg);font-size:12px;font-weight:800;letter-spacing:.08em;padding:7px 14px;border-radius:999px}
+.badge i{width:7px;height:7px;border-radius:50%;background:var(--yellow);display:inline-block}
+h1{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:clamp(34px,8vw,56px);line-height:1.08;margin:16px 0 10px;letter-spacing:.01em}
+h1.hl{color:var(--coral)}
+h1.hl2{color:var(--teal-d)}
+@media (prefers-color-scheme: dark){ h1.hl2{color:var(--teal)}}
+.lead{color:var(--ink2);font-size:15.5px;font-weight:700;max-width:560px;margin:0 auto}
+.lead b{color:var(--ink)}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.hero-tags span{font-size:12.5px;font-weight:800;background:var(--card);border:1.5px solid var(--line);padding:7px 12px;border-radius:999px}
+/* UPLOAD */
+.stage{margin-top:26px}
+.drop{background:var(--card);border:2.5px dashed #EFC98F;border-radius:28px;padding:28px 20px;text-align:center;box-shadow:var(--shadow);transition:border-color.2s, background.2s}
+@media (prefers-color-scheme: dark){.drop{border-color:#6B543A}}
+.drop.drag{border-color:var(--coral);background:var(--card2)}
+.face-illo{width:118px;height:118px;margin:2px auto 14px;position:relative}
+.face-illo.face{width:118px;height:118px;border-radius:50%;background:#FFE3B3;border:3px solid var(--ink);position:relative;overflow:hidden}
+.face-illo.eye{position:absolute;top:48px;width:13px;height:18px;border-radius:50%;background:var(--ink)}
+.face-illo.eye.l{left:32px}.face-illo.eye.r{right:32px}
+.face-illo.mouth{position:absolute;left:50%;top:74px;width:34px;height:18px;transform:translateX(-50%);border:3.5px solid var(--ink);border-top:none;border-left:none;border-right:none;border-radius:0 0 34px 34px}
+.face-illo.cheek{position:absolute;top:66px;width:20px;height:12px;border-radius:50%;background:#FFB1A0;opacity:.85}
+.face-illo.cheek.l{left:12px}.face-illo.cheek.r{right:12px}
+.face-illo.scan{position:absolute;left:-4px;right:-4px;top:8px;height:26px;background:linear-gradient(180deg,transparent,rgba(15,181,166,.35),transparent);border-bottom:2px solid var(--teal);animation:scan 2.4s ease-in-out infinite}
+@keyframes scan{0%,100%{top:6px}50%{top:84px}}
+@media (prefers-reduced-motion: reduce){.face-illo.scan{animation:none}}
+.drop h2{font-family:"Zen Maru Gothic",sans-serif;font-size:21px;margin:0 0 6px}
+.drop p{color:var(--ink2);font-size:13.5px;font-weight:700;margin:0 0 18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:999px;font-weight:800;font-size:15.5px;padding:13px 26px;min-height:48px;transition:transform.12s, opacity.2s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--coral);color:#fff;box-shadow:0 6px 0 var(--coral-d)}
+.btn-primary:active{box-shadow:0 2px 0 var(--coral-d)}
+.btn-ghost{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.btn-teal{background:var(--teal);color:#fff;box-shadow:0 6px 0 var(--teal-d)}
+.btn-teal:active{box-shadow:0 2px 0 var(--teal-d)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.sample-row{margin-top:18px;padding-top:16px;border-top:1.5px dashed var(--line)}
+.sample-row p{margin:0 0 10px;font-size:12.5px}
+.samples{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.sample{width:64px;height:64px;border-radius:50%;border:3px solid var(--card);outline:2px solid var(--line);padding:0;overflow:hidden;background:#eee;min-height:64px}
+.sample canvas{width:100%;height:100%;display:block}
+.privacy{margin-top:16px;font-size:12px;color:var(--ink2);font-weight:700;display:flex;gap:6px;justify-content:center;align-items:flex-start;text-align:left;max-width:480px;margin-left:auto;margin-right:auto}
+.privacy svg{flex:none;margin-top:2px}
+/* PREVIEW + ANALYZING */
+.preview-card{background:var(--card);border-radius:28px;box-shadow:var(--shadow);padding:22px;text-align:center;border:1.5px solid var(--line)}
+.photo-frame{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:0 auto;border-radius:22px;overflow:hidden;background:#000}
+.photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-frame.scanline{position:absolute;left:0;right:0;top:0;height:56px;background:linear-gradient(180deg,transparent,rgba(15,181,166,.45),transparent);border-bottom:3px solid var(--teal);display:none}
+.analyzing.photo-frame.scanline{display:block;animation:scan2 1.1s ease-in-out infinite}
+@keyframes scan2{0%{top:-10px}100%{top:calc(100% - 40px)}}
+.corner{position:absolute;width:26px;height:26px;border:4px solid var(--yellow);display:none}
+.analyzing.corner{display:block}
+.corner.tl{top:10px;left:10px;border-right:none;border-bottom:none;border-radius:8px 0 0 0}
+.corner.tr{top:10px;right:10px;border-left:none;border-bottom:none;border-radius:0 8px 0 0}
+.corner.bl{bottom:10px;left:10px;border-right:none;border-top:none;border-radius:0 0 0 8px}
+.corner.br{bottom:10px;right:10px;border-left:none;border-top:none;border-radius:0 0 8px 0}
+.status{margin-top:18px;min-height:56px}
+.status.step{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:18px}
+.status.sub{color:var(--ink2);font-size:13px;font-weight:700}
+.bar{height:12px;background:var(--bg2);border-radius:999px;overflow:hidden;margin:14px auto 4px;max-width:420px;border:1.5px solid var(--line)}
+.bar i{display:block;height:100%;width:0%;background:repeating-linear-gradient(45deg,var(--teal) 0 10px,#0CA696 10px 20px);border-radius:999px;transition:width.25s}
+.metrics{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.metrics span{font-size:12px;font-weight:800;background:var(--card2);border:1.5px solid var(--line);border-radius:999px;padding:6px 11px}
+.metrics span b{color:var(--coral-d)}
+@media (prefers-color-scheme: dark){.metrics span b{color:var(--yellow)}}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+/* RESULT */
+.result{display:none}
+.result.show{display:block;animation:pop.45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.result.show{animation:none}}
+.result-card{border-radius:28px;overflow:hidden;box-shadow:var(--shadow);border:1.5px solid var(--line);background:var(--card)}
+.result-head{padding:26px 22px 20px;text-align:center;color:#fff;position:relative}
+.result-head.group{font-size:12px;font-weight:800;letter-spacing:.14em;opacity:.92}
+.mbti-letters{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:clamp(56px,15vw,84px);line-height:1;letter-spacing:.04em;margin:8px 0 4px;text-shadow:0 4px 0 rgba(0,0,0,.14)}
+.type-name{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:24px}
+.type-catch{font-size:14px;font-weight:700;opacity:.95;margin-top:4px}
+.result-photo{width:86px;height:86px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.9);margin:0 auto 6px;display:block;background:#ddd}
+.result-body{padding:22px}
+.desc{font-size:15px;font-weight:700;line-height:1.8;margin:0}
+.dims{margin-top:20px;display:grid;gap:14px}
+.dim-row{display:grid;grid-template-columns:86px 1fr 86px;align-items:center;gap:8px;font-size:12.5px;font-weight:800}
+.dim-row.r{text-align:right}
+.dim-track{height:14px;background:var(--bg2);border:1.5px solid var(--line);border-radius:999px;position:relative;overflow:hidden}
+.dim-fill{position:absolute;top:0;bottom:0;border-radius:999px}
+.dim-pct{text-align:center;font-size:12px;color:var(--ink2);margin-top:-8px;font-weight:800}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+@media (max-width:560px){.grid2{grid-template-columns:1fr}}
+.mini{background:var(--card2);border:1.5px solid var(--line);border-radius:16px;padding:14px 16px}
+.mini h3{margin:0 0 6px;font-size:13px;letter-spacing:.06em;color:var(--ink2)}
+.mini p{margin:0;font-size:14px;font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+.tags span{font-size:12.5px;font-weight:800;padding:6px 11px;border-radius:999px;background:var(--card);border:1.5px solid var(--line)}
+.match{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.match button{border:none;border-radius:12px;padding:9px 13px;font-weight:900;font-size:14px;color:#fff;min-height:40px}
+.face-data{margin-top:18px;background:var(--card2);border:1.5px dashed var(--line);border-radius:16px;padding:14px 16px}
+.face-data h3{margin:0 0 8px;font-size:13px;color:var(--ink2);letter-spacing:.06em}
+.face-data ul{margin:0;padding:0;list-style:none;display:grid;gap:5px;font-size:13.5px;font-weight:700}
+.face-data li{display:flex;justify-content:space-between;gap:10px}
+.face-data li b{white-space:nowrap}
+/* CAMERA */
+.upload-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.upload-actions .btn svg{flex:none}
+.camera-card h2{font-family:"Zen Maru Gothic",sans-serif;font-size:21px;margin:0 0 6px}
+.camera-card .cam-lead{color:var(--ink2);font-size:13.5px;font-weight:700;margin:0 0 16px}
+.cam-frame{position:relative;width:min(340px,82vw);aspect-ratio:1;margin:0 auto;border-radius:22px;overflow:hidden;background:#111}
+.cam-frame video,.cam-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.cam-frame video{transform:scaleX(-1)}
+.cam-guide{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.cam-guide i{width:62%;height:76%;border:3px dashed rgba(255,255,255,.85);border-radius:50%;display:block;box-shadow:0 0 0 999px rgba(0,0,0,.12)}
+.cam-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;background:rgba(0,0,0,.45);text-align:center;padding:20px}
+.cam-status{margin-top:16px;min-height:28px;font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:17px}
+.cam-status.sub{font-family:inherit;font-weight:700;font-size:13px;color:var(--ink2);min-height:20px;margin-top:0}
+.shutter-btn{width:72px;height:72px;min-height:72px;border-radius:50%;border:5px solid var(--card);outline:3px solid var(--coral);background:var(--coral);color:#fff;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform.12s}
+.shutter-btn:active{transform:scale(.93)}
+.shutter-btn:disabled{opacity:.45;cursor:not-allowed}
+.shutter-btn i{width:26px;height:26px;border-radius:50%;background:#fff;display:block}
+.cam-error{margin-top:16px;background:var(--card2);border:1.5px dashed var(--line);border-radius:16px;padding:16px;text-align:left}
+.cam-error h3{margin:0 0 6px;font-size:15px;font-family:"Zen Maru Gothic",sans-serif}
+.cam-error p{margin:0;font-size:13.5px;font-weight:700;color:var(--ink2)}
+.cam-error .actions{justify-content:flex-start;margin-top:12px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,80px);background:var(--ink);color:var(--bg);font-weight:800;font-size:14px;padding:12px 20px;border-radius:999px;box-shadow:var(--shadow);transition:transform.3s;z-index:50;pointer-events:none}
+.toast.show{transform:translate(-50%,0)}
+/* MISSION */
+.mission{margin-top:22px;background:var(--card);border:2px solid var(--yellow);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px}
+.mission-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12.5px;font-weight:800;letter-spacing:.08em;color:var(--ink2)}
+.mission-head .mission-badge{background:var(--yellow);color:#4A3200;border-radius:999px;padding:4px 11px;letter-spacing:.04em}
+.mission-main{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:clamp(20px,5.4vw,27px);line-height:1.35;margin:10px 0 6px}
+.mission-main .mission-expr{color:var(--coral-d)}
+@media (prefers-color-scheme: dark){.mission-main .mission-expr{color:var(--pink)}}
+.mission-target{display:inline-block;color:#fff;border-radius:10px;padding:1px 10px;margin:0 2px;vertical-align:baseline}
+.mission-hint{margin:0;font-size:13.5px;font-weight:700;color:var(--ink2)}
+.mission-hint b{color:var(--ink)}
+.mission-result{border-radius:16px;padding:16px 18px;margin-bottom:18px;border:2px solid var(--line);background:var(--card2)}
+.mission-result .mr-title{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:19px;margin:0 0 4px}
+.mission-result .mr-text{margin:0;font-size:14px;font-weight:700}
+.mission-result.achieved{border-color:var(--yellow);background:#FFF3D1}
+@media (prefers-color-scheme: dark){.mission-result.achieved{background:#4A3A14}}
+.mission-result.achieved .mr-title{color:var(--coral-d)}
+@media (prefers-color-scheme: dark){.mission-result.achieved .mr-title{color:var(--yellow)}}
+.confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.confetti i{position:absolute;top:-14px;width:9px;height:15px;border-radius:2px;opacity:0;animation:confetti-fall 1.6s ease-in forwards}
+@keyframes confetti-fall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(300px) rotate(560deg)}}
+@media (prefers-reduced-motion: reduce){.confetti i{animation:none;display:none}}
+/* SHARE CARD */
+.share-box{margin-top:18px;background:var(--card2);border:1.5px solid var(--line);border-radius:16px;padding:16px;text-align:center}
+.share-box h3{margin:0 0 4px;font-size:14px;letter-spacing:.05em}
+.share-box p{margin:0 0 14px;font-size:12.5px;font-weight:700;color:var(--ink2)}
+.share-box img{width:min(250px,68vw);aspect-ratio:9/16;object-fit:cover;border-radius:14px;border:1.5px solid var(--line);box-shadow:var(--shadow);display:block;margin:0 auto;background:var(--card)}
+.share-box .actions{margin-top:14px}
+/* 16 TYPES */
+.section{margin-top:44px}
+.section h2{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:24px;margin:0 0 4px;text-align:center}
+.section.sub{text-align:center;color:var(--ink2);font-weight:700;font-size:13.5px;margin:0 0 18px}
+.type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:640px){.type-grid{grid-template-columns:repeat(2,1fr)}}
+.type-cell{border:none;border-radius:16px;padding:14px 10px 12px;color:#fff;text-align:center;min-height:92px;display:flex;flex-direction:column;justify-content:center;gap:2px;transition:transform.12s}
+.type-cell:active{transform:scale(.96)}
+.type-cell.code{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:21px;letter-spacing:.03em}
+.type-cell.nm{font-size:12px;font-weight:800;opacity:.95}
+.how{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.how ol{margin:0;padding-left:20px;display:grid;gap:8px;font-size:14px;font-weight:700}
+.how p{font-size:13px;color:var(--ink2);font-weight:700;margin:12px 0 0}
+footer{margin-top:36px;text-align:center;color:var(--ink2);font-size:12px;font-weight:700;line-height:1.8}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+<span class="badge"><i></i>エンタメ診断 ・ 結果はお遊びです</span>
+<h1>顔写真でわかる<br><span class="hl">MBTI</span><span class="hl2">診断</span></h1>
+<p class="lead">写真を選ぶか、その場でカメラで撮るだけ。顔の<b>明るさ・色合い・コントラスト・左右バランス</b>をその場で読み取って、16タイプの中から「顔の雰囲気にいちばん近いタイプ」をはじき出します。</p>
+<div class="hero-tags">
+<span>所要時間 約10秒</span><span>その場でカメラ撮影OK</span><span>写真は端末の外に出ません</span><span>全16タイプ対応</span><span>日替わり表情ミッション</span><span>シェア画像が作れる</span>
+</div>
+</header>
+
+<!-- DAILY MISSION -->
+<section class="mission" id="missionCard" aria-label="今日の表情ミッション">
+<div class="mission-head"><span class="mission-badge">今日の表情ミッション</span><span id="missionDate"></span></div>
+<div class="mission-main"><span class="mission-expr" id="missionExpr"></span>で <span class="mission-target" id="missionTarget"></span> を狙え！</div>
+<p class="mission-hint" id="missionHint"></p>
+</section>
+
+<!-- STEP 1: UPLOAD -->
+<section class="stage" id="stageUpload">
+<div class="drop" id="dropZone">
+<div class="face-illo" aria-hidden="true">
+<div class="face">
+<span class="eye l"></span><span class="eye r"></span>
+<span class="cheek l"></span><span class="cheek r"></span>
+<span class="mouth"></span>
+<span class="scan"></span>
+</div>
+</div>
+<h2>顔写真をここにドロップ</h2>
+<p>正面の顔がはっきり写っている写真がいちばん盛れます。<br>自撮り・証明写真・推しの写真でもOK。その場で撮ることもできます。</p>
+<div class="upload-actions">
+<button class="btn btn-primary" id="cameraBtn" type="button"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>カメラで撮る</button>
+<button class="btn btn-ghost" id="pickBtn" type="button">写真を選ぶ</button>
+</div>
+<input type="file" id="fileInput" accept="image/*" class="hidden" aria-label="顔写真を選ぶ">
+<input type="file" id="cameraFileInput" accept="image/*" capture="user" class="hidden" aria-label="カメラアプリで顔写真を撮る">
+<div class="sample-row">
+<p>写真を用意できない人は、サンプルの顔イラストでお試し診断</p>
+<div class="samples" id="samples"></div>
+</div>
+<p class="privacy">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+<span>写真はあなたの端末の中だけで解析されます。サーバーへの送信・保存は一切しません。診断結果は科学的な性格判定ではなく、顔の画像データから作るエンタメです。</span>
+</p>
+</div>
+</section>
+
+<!-- STEP 1.5: CAMERA -->
+<section class="stage hidden" id="stageCamera">
+<div class="preview-card camera-card" id="cameraCard">
+<h2>カメラで撮影</h2>
+<p class="cam-lead">ガイドの丸に顔を合わせて、明るい場所で正面から撮ると読み取りやすくなります。<br>プレビューは鏡のように左右反転して表示されます（撮影画像もそのままの見た目で保存されます）。</p>
+<div class="cam-frame" id="camFrame">
+<video id="cameraVideo" autoplay playsinline muted aria-label="カメラのライブプレビュー"></video>
+<img id="cameraShot" class="hidden" alt="撮影した顔写真の確認用プレビュー">
+<div class="cam-guide" id="camGuide" aria-hidden="true"><i></i></div>
+<div class="cam-loading" id="camLoading">カメラを起動しています…</div>
+</div>
+<div class="cam-status" id="cameraStatus">カメラを起動しています</div>
+<div class="cam-status sub" id="cameraSub">許可を求める画面が出たら「許可」を選んでください</div>
+<div class="cam-error hidden" id="cameraError">
+<h3>カメラを開けませんでした</h3>
+<p id="cameraErrorText">カメラが使えない環境のようです。代わりに、端末のカメラアプリで撮った写真や、手持ちの写真ファイルから診断できます。</p>
+<div class="actions">
+<button class="btn btn-teal" id="fallbackCaptureBtn" type="button">カメラアプリで撮る</button>
+<button class="btn btn-ghost" id="fallbackFileBtn" type="button">写真を選ぶ</button>
+</div>
+</div>
+<div class="actions" id="cameraLiveActions">
+<button class="shutter-btn" id="shutterBtn" type="button" disabled aria-label="シャッターを押して撮影"><i></i></button>
+<button class="btn btn-ghost" id="cameraCancelBtn" type="button">キャンセル</button>
+</div>
+<div class="actions hidden" id="cameraReviewActions">
+<button class="btn btn-teal" id="usePhotoBtn" type="button">これで診断</button>
+<button class="btn btn-ghost" id="retakeBtn" type="button">撮り直し</button>
+</div>
+<p class="privacy">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+<span>カメラ映像・撮影した写真はあなたの端末の中だけで処理されます。外部への送信・保存は一切しません。撮影が終わったらカメラは自動で止まります。</span>
+</p>
+</div>
+</section>
+
+<!-- STEP 2: PREVIEW / ANALYZING -->
+<section class="stage hidden" id="stagePreview">
+<div class="preview-card" id="previewCard">
+<div class="photo-frame">
+<img id="previewImg" alt="診断に使う顔写真のプレビュー">
+<div class="scanline"></div>
+<span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+</div>
+<div class="status">
+<div class="step" id="statusStep">この写真で診断します</div>
+<div class="sub" id="statusSub">顔が写っていることを確認したら、診断スタート！</div>
+<div class="bar hidden" id="progressWrap"><i id="progressBar"></i></div>
+<div class="metrics hidden" id="metrics"></div>
+</div>
+<div class="actions" id="previewActions">
+<button class="btn btn-teal" id="startBtn" type="button">診断スタート</button>
+<button class="btn btn-ghost" id="changeBtn" type="button">写真を変える</button>
+</div>
+</div>
+</section>
+
+<!-- STEP 3: RESULT -->
+<section class="stage result" id="stageResult" aria-live="polite">
+<div class="result-card">
+<div class="result-head" id="resultHead">
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+<img class="result-photo" id="resultPhoto" alt="診断に使った顔写真">
+<div class="group" id="resultGroup"></div>
+<div class="mbti-letters" id="resultCode"></div>
+<div class="type-name" id="resultName"></div>
+<div class="type-catch" id="resultCatch"></div>
+</div>
+<div class="result-body">
+<div class="mission-result hidden" id="missionResult">
+<p class="mr-title" id="missionResultTitle"></p>
+<p class="mr-text" id="missionResultText"></p>
+</div>
+<p class="desc" id="resultDesc"></p>
+<div class="dims" id="dims"></div>
+<div class="grid2">
+<div class="mini"><h3>キーワード</h3><div class="tags" id="resultTags"></div></div>
+<div class="mini"><h3>強み</h3><p id="resultStrong"></p></div>
+<div class="mini"><h3>ちょっと注意</h3><p id="resultWeak"></p></div>
+<div class="mini"><h3>恋愛スタイル</h3><p id="resultLove"></p></div>
+<div class="mini"><h3>仕事スタイル</h3><p id="resultWork"></p></div>
+<div class="mini"><h3>相性がいいタイプ（タップで見る）</h3><div class="match" id="resultMatch"></div></div>
+</div>
+<div class="face-data">
+<h3>今回の顔データ読み取り値</h3>
+<ul id="faceDataList"></ul>
+</div>
+<div class="share-box">
+<h3>シェア画像カード</h3>
+<p>写真・タイプ・キャッチコピー・4軸バーを1枚にまとめた、ストーリーズ向けの縦長画像（9:16）です</p>
+<img id="sharePreview" class="hidden" alt="シェア用画像カードのプレビュー">
+<div class="actions">
+<button class="btn btn-teal" id="cardBtn" type="button">シェア画像を保存</button>
+</div>
+</div>
+<div class="actions">
+<button class="btn btn-primary" id="copyBtn" type="button">結果をコピーしてシェア</button>
+<button class="btn btn-ghost" id="againBtn" type="button">別の写真で診断</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 16 TYPES -->
+<section class="section">
+<h2>16タイプ図鑑</h2>
+<p class="sub">気になるタイプをタップすると、そのタイプの説明が見られます</p>
+<div class="type-grid" id="typeGrid"></div>
+</section>
+
+<!-- HOW -->
+<section class="section">
+<h2>診断のしくみ</h2>
+<p class="sub">中身は意外とマジメに画像を読んでいます</p>
+<div class="how">
+<ol>
+<li>写真を小さなグリッドに縮小し、ピクセル単位で明るさ・暖色度・色の鮮やかさ・コントラストを測ります。</li>
+<li>左半分と右半分を比べて「左右バランス」、細部の情報量から「ディテール感」を数値化します。</li>
+<li>その数値を E/I・S/N・T/F・J/P の4軸に変換し、16タイプから最も近いものを選びます。同じ写真なら毎回同じ結果になります。</li>
+</ol>
+<p>※ 本アプリはエンターテインメントです。顔から性格を科学的に判定できるものではありません。「雰囲気が近いタイプ」として、友達との話題作りにお楽しみください。本来のMBTIは質問紙による自己理解のツールです。</p>
+</div>
+</section>
+
+<footer>
+顔写真MBTI診断 — 写真は端末内でのみ処理され、外部に送信されません。<br>
+結果はエンタメとしてお楽しみください。
+</footer>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<canvas id="workCanvas" width="72" height="72" class="hidden"></canvas>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- 16タイプデータ ---------- */
+var GROUPS = {
+analyst: { label:"分析家グループ", color:"#7C5CBF"},
+diplomat: { label:"外交官グループ", color:"#3DAB6B"},
+sentinel: { label:"番人グループ", color:"#3E7CB8"},
+explorer: { label:"探検家グループ", color:"#E8A020"}
+};
+var TYPES = {
+INTJ:{g:"analyst", name:"建築家", catch:"静かな顔に、大きな設計図", desc:"落ち着いた表情の奥に、先の先まで見通す視点が隠れているタイプ。写真の整ったバランス感から、感情に流されず自分の計画を淡々と進める「戦略家」の空気が漂います。群れるより、一人で考える時間にこそ力を発揮します。", tags:["戦略家","独立心","完璧主義"], strong:"長期計画を立てて、ブレずに実行できるところ", weak:"説明が端的すぎて、冷たいと誤解されがち", love:"好意は言葉より行動と時間の使い方で示すタイプ", work:"仕組みから作り直す仕事で真価を発揮", match:["ENFP","ENTP"]},
+INTP:{g:"analyst", name:"論理学者", catch:"ぼんやり顔の、好奇心モンスター", desc:"どこか遠くを見ているような表情が印象的。頭の中では常に「なんで？」が渦巻いていて、興味を持ったテーマは深夜まで掘り下げてしまうタイプです。写真の柔らかいコントラストから、物腰は穏やかでも思考は鋭いギャップが見えます。", tags:["好奇心","分析好き","マイペース"], strong:"物事の仕組みを素早く見抜く洞察力", weak:"興味のないことへの集中力が続きにくい", love:"知的な会話が弾む相手に惹かれる", work:"研究・分析・仕様を詰める場面で輝く", match:["ENTJ","ESTJ"]},
+ENTJ:{g:"analyst", name:"指揮官", catch:"目力で場を仕切るリーダー顔", desc:"写真からも伝わる強い目線と端正な佇まい。目標を決めたら人を巻き込み、資源を配分し、最短ルートで結果を取りにいくタイプです。輪郭のはっきりした印象どおり、決断の速さと推進力は16タイプ随一クラス。", tags:["リーダー","決断力","結果主義"], strong:"チームをゴールまで引っ張る推進力", weak:"ペースが速すぎて周りが置いていかれがち", love:"対等に意見を言い合えるパートナーを好む", work:"マネジメントや事業づくりで本領発揮", match:["INTP","INFP"]},
+ENTP:{g:"analyst", name:"討論者", catch:"いたずらっぽい笑顔のアイデアマン", desc:"表情の豊かさと目の輝きが目立つタイプ。新しいアイデアを思いつく速度が速く、議論そのものをゲームのように楽しみます。「とりあえずやってみよう」が口ぐせで、場の空気を一瞬で明るく変える発明家気質です。", tags:["アイデア","機転","挑戦者"], strong:"ゼロから企画を生み出す発想力", weak:"飽きるのも速く、詰めが甘くなりがち", love:"会話のテンポが合う相手と長続きする", work:"新規事業・企画・交渉の場で強い", match:["INFJ","INTJ"]},
+INFJ:{g:"diplomat", name:"提唱者", catch:"穏やかな顔の、芯の強い理想家", desc:"柔らかい表情なのに、目には確かな意志が宿るタイプ。人の気持ちの微妙な変化にいち早く気づき、静かに支えるのが得意です。写真の落ち着いた色合いから、深く考える内面の豊かさと、理想を諦めない強さがにじみます。", tags:["理想家","共感力","洞察"], strong:"人の本音や将来の方向性を見抜く力", weak:"抱え込みすぎて一人で疲れてしまう", love:"心の深いところでつながる関係を求める", work:"人を支援・教育する役割で力を発揮", match:["ENTP","ENFP"]},
+INFP:{g:"diplomat", name:"仲介者", catch:"夢見がちな瞳の、詩人気質", desc:"ふんわりした雰囲気と、想像の世界にすぐ飛んでいける瞳がチャームポイント。自分の価値観をとても大切にし、好きなものへの愛情は誰にも負けません。色彩の柔らかさどおり、感受性が豊かでクリエイティブなタイプです。", tags:["ロマンチスト","感受性","自分軸"], strong:"人を癒やす言葉や表現を生み出せること", weak:"現実的な締め切りや数字に弱い面も", love:"運命的な出会いと誠実な愛情を信じる", work:"創作・表現・人の心に触れる仕事向き", match:["ENTJ","ENFJ"]},
+ENFJ:{g:"diplomat", name:"主人公", catch:"笑顔で全員を巻き込む太陽顔", desc:"写真越しにも伝わる、包み込むような明るさ。周りの人の成長や幸せが自分の喜びになるタイプで、自然と集団の中心にいます。表情の温かさそのままに、励まし上手・聞き上手で、誰からも頼られる存在です。", tags:["面倒見","カリスマ","熱血"], strong:"人のやる気を引き出すコーチング力", weak:"他人の問題まで背負い込みすぎる", love:"相手を全力で応援し、尽くす愛情表現", work:"教育・チーム運営・対人支援で輝く", match:["INFP","ISFP"]},
+ENFP:{g:"diplomat", name:"広報運動家", catch:"はじける笑顔の、自由な魂", desc:"弾けるような表情とエネルギーが写真いっぱいに広がるタイプ。人とつながることが大好きで、新しい出会いや体験にワクワクが止まりません。カラフルな印象どおり、発想も感情も豊かで、周りを勝手に元気にします。", tags:["自由","社交的","ワクワク"], strong:"初対面でも一瞬で打ち解ける人懐っこさ", weak:"熱しやすく冷めやすく、継続が課題", love:"一緒に冒険できる、笑いの合う相手が理想", work:"広報・企画・クリエイティブ全般で活躍", match:["INFJ","INTJ"]},
+ISTJ:{g:"sentinel", name:"管理者", catch:"端正で信頼感のある、堅実顔", desc:"整った身だしなみと落ち着いた表情が「この人なら任せて安心」を物語るタイプ。約束とルールを守り、コツコツ積み上げる力は随一です。写真の安定したバランスどおり、派手さより誠実さで勝負する実務家です。", tags:["誠実","責任感","堅実"], strong:"決めたことを最後までやり切る継続力", weak:"急な変更や想定外にストレスを感じやすい", love:"誠実で一貫した態度が何よりの愛情表現", work:"正確さが求められる管理・運用業務向き", match:["ESFP","ESTP"]},
+ISFJ:{g:"sentinel", name:"擁護者", catch:"優しい微笑みの、守り人", desc:"穏やかで親しみやすい表情の、縁の下の力持ちタイプ。人のために細やかに気を配り、困っている人を見ると放っておけません。柔らかな色合いどおり、安心感を与える存在で、チームや家庭の「守り神」になりがちです。", tags:["献身的","気配り","安定感"], strong:"細部まで気を配るサポート力", weak:"頼まれると断れず、無理をしてしまう", love:"日常の小さな気遣いで愛を伝えるタイプ", work:"医療・福祉・事務サポートなど対人支援向き", match:["ESTP","ESFP"]},
+ESTJ:{g:"sentinel", name:"幹部", catch:"キリッとした顔の、仕切り屋さん", desc:"はつらつとした表情と姿勢の良さが目立つタイプ。組織や場をまとめるのが得意で、ルールと段取りを整えて物事を前に進めます。明快なコントラストどおり、白黒はっきりした判断力と実行力の持ち主です。", tags:["統率力","実行力","段取り上手"], strong:"混乱した場を素早く整理して前に進める力", weak:"効率優先で、気持ちの面を見落としがち", love:"頼りがいのある態度で相手をリードする", work:"運営管理・プロジェクト推進役に最適", match:["INTP","ISFP"]},
+ESFJ:{g:"sentinel", name:"領事官", catch:"人懐っこい笑顔の、世話焼きさん", desc:"誰にでも開かれた明るい笑顔が印象的なタイプ。場の和を大切にし、みんなが楽しく過ごせるよう自然と気を配ります。温かい色味どおりの社交性と面倒見の良さで、クラスや職場の「お母さん／お父さん」役になりがちです。", tags:["社交的","世話好き","協調性"], strong:"みんなの都合を調整して場を円滑にする力", weak:"人に嫌われることへの不安が強め", love:"記念日やイベントを大切にする愛情表現", work:"接客・カスタマー対応・総務などで活躍", match:["ISFP","ISTP"]},
+ISTP:{g:"explorer", name:"巨匠", catch:"クールな表情の、職人気質", desc:"多くを語らないクールな佇まいが魅力のタイプ。頭で考えるより手を動かして理解する実践派で、機械や道具、仕組みいじるのが大好き。写真のさっぱりした印象どおり、束縛を嫌い、自分のペースを守る一匹狼な面もあります。", tags:["職人","冷静","実践派"], strong:"トラブル時に冷静に手を動かして解決する力", weak:"感情表現が少なく、誤解されやすい", love:"ベタベタより、程よい距離感の関係が心地いい", work:"技術職・エンジニア・運転など現場系で強い", match:["ESFJ","ESTJ"]},
+ISFP:{g:"explorer", name:"冒険家", catch:"柔らかい雰囲気の、感性アーティスト", desc:"ナチュラルで柔らかな表情が素敵なタイプ。美しいもの・心地よいものへの感度が高く、自分らしいスタイルを静かに貫きます。優しい色合いどおり穏やかに見えますが、内側には「好き」への強いこだわりを持つ芸術家肌です。", tags:["感性","マイペース","芸術家肌"], strong:"五感で楽しむセンスと表現力", weak:"競争やノルマの強い環境は苦手", love:"一緒にいて落ち着く、自然体な関係を好む", work:"デザイン・美容・料理など感性を活かす仕事向き", match:["ENFJ","ESTJ"]},
+ESTP:{g:"explorer", name:"起業家", catch:"エネルギッシュな、アクション顔", desc:"躍動感のある表情と強い目線が目を引くタイプ。考える前にまず動く行動派で、スリルや勝負ごとにもめっぽう強い。はっきりした輪郭どおり、リスクを楽しみながら結果を取りにいく、場のムードメーカーでもあります。", tags:["行動派","度胸","即断即決"], strong:"修羅場でも動じない度胸と適応力", weak:"退屈が大の苦手で、衝動的な判断も", love:"一緒にアクティブに楽しめる相手に惹かれる", work:"営業・交渉・イベントなど動きの多い仕事向き", match:["ISFJ","ISTJ"]},
+ESFP:{g:"explorer", name:"エンターテイナー", catch:"満面の笑みの、生まれつきの人気者", desc:"写真からもはみ出すほどの明るさと華やかさ。注目されること、みんなを笑顔にすることが何よりのご褒美なタイプです。鮮やかな印象どおり「今この瞬間」を全力で楽しむ天才で、いるだけで場がパッと明るくなります。", tags:["人気者","陽気","ムードメーカー"], strong:"どんな場でも一瞬で盛り上げる力", weak:"計画や地道な準備作業はやや苦手", love:"サプライズと楽しいデートで愛を表現する", work:"接客・芸能・イベント・販売などで大活躍", match:["ISFJ","ISTJ"]}
+};
+var ORDER = ["INTJ","INTP","ENTJ","ENTP","INFJ","INFP","ENFJ","ENFP","ISTJ","ISFJ","ESTJ","ESFJ","ISTP","ISFP","ESTP","ESFP"];
+
+/* ---------- 今日の表情ミッション（日替わり） ---------- */
+var MISSIONS = {
+INTJ:{expr:"クールに顎を引いた真顔", hint:"明るさを少し抑えた落ち着いた表情で。整ったバランスと強いコントラストがINTJ寄せのコツです。"},
+INTP:{expr:"ぼんやり遠くを見る顔", hint:"力を抜いて視線を少し外すと雰囲気が出ます。柔らかい光で撮るのがポイント。"},
+ENTJ:{expr:"キリッと目力強めの顔", hint:"目線をまっすぐカメラへ。メリハリのある明暗がENTJの「仕切る空気」を作ります。"},
+ENTP:{expr:"いたずらっぽい笑顔", hint:"片方の口角をクイッと上げて。鮮やかな色味と表情の豊かさでENTPに近づきます。"},
+INFJ:{expr:"穏やかに微笑む顔", hint:"柔らかい光と落ち着いた色合いで。優しいけれど芯のある目元を意識してみて。"},
+INFP:{expr:"夢見るようなふんわり顔", hint:"ふんわりした明るさと柔らかい色彩がINFP寄せ。頬の血色感も味方します。"},
+ENFJ:{expr:"包み込むような笑顔", hint:"温かみのある光で、にっこり大きく微笑んで。明るさと暖色度を上げるのがコツ。"},
+ENFP:{expr:"はじける満面の笑み", hint:"口角を思いきり上げて、明るい場所でパッと笑って。明るさ＋鮮やかさがENFPの決め手です。"},
+ISTJ:{expr:"端正に姿勢よく、落ち着いた真顔", hint:"正面から左右バランスよく、すっきりした明暗で。安定感のある1枚を狙って。"},
+ISFJ:{expr:"優しくほほえむ顔", hint:"柔らかい光で穏やかに。温かみのある色合いがISFJの安心感を演出します。"},
+ESTJ:{expr:"ハツラツと歯を見せた笑顔", hint:"明るくはっきりした表情で。コントラスト強めがESTJのキリッと感に効きます。"},
+ESFJ:{expr:"人懐っこくにっこり笑う顔", hint:"温かい光で大きくにっこり。明るさと暖色度を上げるとESFJに近づきます。"},
+ISTP:{expr:"クールな無表情", hint:"表情は minimal に、すっきりした色味で。さっぱりしたコントラストがISTP寄せ。"},
+ISFP:{expr:"ナチュラルで柔らかい顔", hint:"作り込まない自然な表情で。柔らかい色合いと穏やかな明るさがポイント。"},
+ESTP:{expr:"自信満々なワイルド顔", hint:"強い目線と躍動感を意識して。はっきりした輪郭とコントラストでESTPに。"},
+ESFP:{expr:"全開の笑顔", hint:"とにかく明るく、鮮やかに！ 笑顔全開＋カラフルな背景がESFPへの近道です。"}
+};
+function dailyMission(){
+var now=new Date();
+var days=Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())/86400000);
+var code=ORDER[((days%ORDER.length)+ORDER.length)%ORDER.length];
+return { code:code, expr:MISSIONS[code].expr, hint:MISSIONS[code].hint, date:now };
+}
+var MISSION = dailyMission();
+var AXIS_ADVICE = [
+function(t){ return t==="E" ? "E寄せのコツ：明るい場所で、口角を上げた大きな笑顔で撮ってみて" : "I寄せのコツ：落ち着いた表情で、柔らかい光の場所で撮ってみて"; },
+function(t){ return t==="S" ? "S寄せのコツ：ピントをくっきり合わせて、はっきりした表情で" : "N寄せのコツ：少し遠くを見るような、ぼんやりした雰囲気で"; },
+function(t){ return t==="T" ? "T寄せのコツ：目線をキリッと決めて、メリハリのある表情で" : "F寄せのコツ：口角を上げて、優しく微笑んで"; },
+function(t){ return t==="J" ? "J寄せのコツ：正面を向いて、左右バランスよく端正に" : "P寄せのコツ：力を抜いて、ラフで自然な表情で"; }
+];
+
+/* ---------- DOM ---------- */
+var $ = function(id){ return document.getElementById(id);};
+var dropZone=$("dropZone"), fileInput=$("fileInput"), previewImg=$("previewImg"),
+stageUpload=$("stageUpload"), stagePreview=$("stagePreview"), stageResult=$("stageResult"),
+previewCard=$("previewCard"), statusStep=$("statusStep"), statusSub=$("statusSub"),
+progressWrap=$("progressWrap"), progressBar=$("progressBar"), metricsEl=$("metrics"),
+previewActions=$("previewActions"), toast=$("toast"), work=$("workCanvas");
+var ctx = work.getContext("2d", { willReadFrequently:true});
+
+var current = { dataUrl:null, metrics:null, result:null, missionAchieved:false};
+var shareCanvas = null;
+var toastTimer=null;
+function showToast(msg){
+toast.textContent=msg; toast.classList.add("show");
+clearTimeout(toastTimer);
+toastTimer=setTimeout(function(){ toast.classList.remove("show");},2400);
+}
+
+/* ---------- ミッションカード表示 ---------- */
+(function(){
+var wd=["日","月","火","水","木","金","土"][MISSION.date.getDay()];
+$("missionDate").textContent=(MISSION.date.getMonth()+1)+"月"+MISSION.date.getDate()+"日（"+wd+"）・日替わりでお題が変わります";
+$("missionExpr").textContent=MISSION.expr;
+var targetEl=$("missionTarget");
+var mt=TYPES[MISSION.code];
+targetEl.textContent=MISSION.code+"（"+mt.name+"）";
+targetEl.style.background=GROUPS[mt.g].color;
+$("missionHint").innerHTML="狙い方："+MISSION.hint+"<br>診断結果が目標タイプと一致すると、結果画面で<b>達成演出</b>が出ます。違っても「あと少し」のヒントがもらえます。";
+})();
+
+/* ---------- サンプルの顔イラスト ---------- */
+var SAMPLES = [
+{ bg:"#FFE3B3", skin:"#FFD9A0", hair:"#4A3226", eye:"#2B2118", label:"サンプル1：穏やかな顔"},
+{ bg:"#D8F3EE", skin:"#FFCFA8", hair:"#B3541E", eye:"#1E3A34", label:"サンプル2：明るい顔"},
+{ bg:"#FDE3EE", skin:"#FFE0BD", hair:"#22223A", eye:"#2B2118", label:"サンプル3：クールな顔"}
+];
+var samplesEl=$("samples");
+SAMPLES.forEach(function(s, idx){
+var btn=document.createElement("button");
+btn.type="button"; btn.className="sample"; btn.title=s.label; btn.setAttribute("aria-label", s.label+"でお試し診断");
+var c=document.createElement("canvas"); c.width=128; c.height=128;
+drawSampleFace(c.getContext("2d"), s, 128);
+btn.appendChild(c);
+btn.addEventListener("click", function(){
+var big=document.createElement("canvas"); big.width=360; big.height=360;
+drawSampleFace(big.getContext("2d"), s, 360);
+setPhoto(big.toDataURL("image/png"));
+});
+samplesEl.appendChild(btn);
+});
+function drawSampleFace(g, s, size){
+var u=size/128;
+g.fillStyle=s.bg; g.fillRect(0,0,size,size);
+g.fillStyle=s.skin; g.beginPath(); g.arc(64*u,70*u,40*u,0,Math.PI*2); g.fill();
+g.fillStyle=s.hair; g.beginPath(); g.arc(64*u,52*u,41*u,Math.PI*1.02,Math.PI*1.98); g.fill();
+g.fillRect(22*u,42*u,8*u,26*u); g.fillRect(98*u,42*u,8*u,26*u);
+g.fillStyle=s.eye;
+g.beginPath(); g.ellipse(49*u,72*u,4.4*u,6*u,0,0,Math.PI*2); g.fill();
+g.beginPath(); g.ellipse(79*u,72*u,4.4*u,6*u,0,0,Math.PI*2); g.fill();
+g.strokeStyle=s.eye; g.lineWidth=3*u; g.lineCap="round";
+g.beginPath(); g.arc(64*u,84*u,13*u,Math.PI*0.15,Math.PI*0.85); g.stroke();
+g.fillStyle="rgba(255,110,90,.5)";
+g.beginPath(); g.ellipse(38*u,86*u,8*u,5*u,0,0,Math.PI*2); g.fill();
+g.beginPath(); g.ellipse(90*u,86*u,8*u,5*u,0,0,Math.PI*2); g.fill();
+}
+
+/* ---------- 写真の取り込み ---------- */
+$("pickBtn").addEventListener("click", function(){ fileInput.click();});
+dropZone.addEventListener("click", function(e){ if(e.target===dropZone) fileInput.click();});
+fileInput.addEventListener("change", function(){
+if(fileInput.files && fileInput.files[0]) loadFile(fileInput.files[0]);
+fileInput.value="";
+});
+["dragenter","dragover"].forEach(function(ev){ dropZone.addEventListener(ev, function(e){ e.preventDefault(); dropZone.classList.add("drag");});});
+["dragleave","drop"].forEach(function(ev){ dropZone.addEventListener(ev, function(e){ e.preventDefault(); dropZone.classList.remove("drag");});});
+dropZone.addEventListener("drop", function(e){
+var f=e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+if(f) loadFile(f);
+});
+document.addEventListener("paste", function(e){
+var items=e.clipboardData && e.clipboardData.items;
+if(!items) return;
+for(var i=0;i<items.length;i++){
+if(items[i].type.indexOf("image/")===0){ loadFile(items[i].getAsFile()); break;}
+}
+});
+function loadFile(file){
+if(!file || file.type.indexOf("image/")!==0){ showToast("画像ファイルを選んでください"); return;}
+var reader=new FileReader();
+reader.onload=function(){ setPhoto(reader.result);};
+reader.onerror=function(){ showToast("写真の読み込みに失敗しました");};
+reader.readAsDataURL(file);
+}
+function setPhoto(dataUrl){
+stopCameraStream();
+var sc=$("stageCamera"); if(sc) sc.classList.add("hidden");
+current.dataUrl=dataUrl; current.metrics=null; current.result=null; current.missionAchieved=false; shareCanvas=null;
+previewImg.src=dataUrl;
+stageUpload.classList.add("hidden");
+stageResult.classList.remove("show");
+stagePreview.classList.remove("hidden");
+previewCard.classList.remove("analyzing");
+progressWrap.classList.add("hidden"); metricsEl.classList.add("hidden");
+previewActions.classList.remove("hidden");
+statusStep.textContent="この写真で診断します";
+statusSub.textContent="顔が写っていることを確認したら、診断スタート！";
+stagePreview.scrollIntoView({behavior:"smooth", block:"start"});
+}
+$("changeBtn").addEventListener("click", function(){
+stopCameraStream();
+stagePreview.classList.add("hidden");
+stageUpload.classList.remove("hidden");
+stageUpload.scrollIntoView({behavior:"smooth"});
+});
+
+/* ---------- カメラ撮影 ---------- */
+var cameraStream=null;
+var capturedDataUrl=null;
+function stopCameraStream(){
+if(cameraStream){
+cameraStream.getTracks().forEach(function(tr){ try{ tr.stop(); }catch(e){} });
+cameraStream=null;
+}
+var v=$("cameraVideo");
+if(v){ try{ v.srcObject=null; }catch(e){} }
+}
+function cameraUiReset(){
+capturedDataUrl=null;
+$("cameraShot").classList.add("hidden");
+$("cameraShot").removeAttribute("src");
+$("cameraVideo").classList.remove("hidden");
+$("camGuide").classList.remove("hidden");
+$("camLoading").classList.remove("hidden");
+$("camLoading").textContent="カメラを起動しています…";
+$("cameraError").classList.add("hidden");
+$("cameraLiveActions").classList.remove("hidden");
+$("cameraReviewActions").classList.add("hidden");
+$("shutterBtn").disabled=true;
+$("cameraStatus").textContent="カメラを起動しています";
+$("cameraSub").textContent="許可を求める画面が出たら「許可」を選んでください";
+}
+function showCameraError(text){
+stopCameraStream();
+$("camLoading").classList.add("hidden");
+$("cameraLiveActions").classList.add("hidden");
+$("cameraReviewActions").classList.add("hidden");
+if(text) $("cameraErrorText").textContent=text;
+$("cameraError").classList.remove("hidden");
+$("cameraStatus").textContent="カメラを開けませんでした";
+$("cameraSub").textContent="下のボタンから、撮った写真や手持ちの写真で診断できます";
+}
+function startCamera(){
+var stageCamera=$("stageCamera");
+stageUpload.classList.add("hidden");
+stageResult.classList.remove("show");
+stagePreview.classList.add("hidden");
+stageCamera.classList.remove("hidden");
+cameraUiReset();
+stageCamera.scrollIntoView({behavior:"smooth", block:"start"});
+if(!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia!=="function"){
+showCameraError("このブラウザ／環境ではカメラのライブ撮影に対応していないようです。代わりに、端末のカメラアプリで撮った写真や、手持ちの写真ファイルから診断できます。");
+return;
+}
+navigator.mediaDevices.getUserMedia({ video:{ facingMode:"user", width:{ideal:1280}, height:{ideal:1280} }, audio:false })
+.then(function(stream){
+/* 途中でキャンセルされていたら即停止 */
+if(stageCamera.classList.contains("hidden")){ stream.getTracks().forEach(function(tr){ tr.stop(); }); return; }
+cameraStream=stream;
+var v=$("cameraVideo");
+v.srcObject=stream;
+var p=v.play(); if(p && p.catch) p.catch(function(){});
+v.onloadedmetadata=function(){
+$("camLoading").classList.add("hidden");
+$("shutterBtn").disabled=false;
+$("cameraStatus").textContent="顔をガイドに合わせて、シャッターを押してね";
+$("cameraSub").textContent="明るい場所で、正面から撮ると読み取りやすくなります";
+};
+})
+.catch(function(err){
+var name=err && err.name ? err.name : "";
+if(name==="NotAllowedError" || name==="SecurityError"){
+showCameraError("カメラの許可が得られませんでした。ブラウザの設定でカメラを許可するか、代わりにカメラアプリで撮った写真や手持ちの写真ファイルから診断してください。");
+} else if(name==="NotFoundError" || name==="OverconstrainedError"){
+showCameraError("使えるカメラが見つかりませんでした。代わりに、端末のカメラアプリで撮った写真や、手持ちの写真ファイルから診断できます。");
+} else if(name==="NotReadableError"){
+showCameraError("カメラが他のアプリで使用中かもしれません。少し待ってからもう一度試すか、代わりに写真ファイルから診断してください。");
+} else {
+showCameraError("カメラを開けませんでした。代わりに、端末のカメラアプリで撮った写真や、手持ちの写真ファイルから診断できます。");
+}
+});
+}
+function closeCameraToUpload(){
+stopCameraStream();
+$("stageCamera").classList.add("hidden");
+stageUpload.classList.remove("hidden");
+stageUpload.scrollIntoView({behavior:"smooth"});
+}
+function capturePhoto(){
+var v=$("cameraVideo");
+if(!v.videoWidth || !v.videoHeight){ showToast("カメラの準備がまだできていません"); return; }
+var side=Math.min(v.videoWidth, v.videoHeight);
+var out=Math.min(side, 1080);
+var sx=(v.videoWidth-side)/2, sy=(v.videoHeight-side)/2;
+var c=document.createElement("canvas"); c.width=out; c.height=out;
+var g=c.getContext("2d");
+/* プレビュー（鏡像）と同じ見た目で保存する */
+g.translate(out,0); g.scale(-1,1);
+g.drawImage(v, sx, sy, side, side, 0, 0, out, out);
+capturedDataUrl=c.toDataURL("image/jpeg", 0.92);
+stopCameraStream();
+var shot=$("cameraShot");
+shot.src=capturedDataUrl;
+shot.classList.remove("hidden");
+v.classList.add("hidden");
+$("camGuide").classList.add("hidden");
+$("camLoading").classList.add("hidden");
+$("cameraLiveActions").classList.add("hidden");
+$("cameraReviewActions").classList.remove("hidden");
+$("cameraStatus").textContent="この写真で診断しますか？";
+$("cameraSub").textContent="顔がはっきり写っていたら「これで診断」、撮り直したいときは「撮り直し」を押してね";
+}
+$("cameraBtn").addEventListener("click", startCamera);
+$("cameraCancelBtn").addEventListener("click", closeCameraToUpload);
+$("shutterBtn").addEventListener("click", capturePhoto);
+$("retakeBtn").addEventListener("click", startCamera);
+$("usePhotoBtn").addEventListener("click", function(){
+if(!capturedDataUrl){ showToast("もう一度撮影してください"); return; }
+var url=capturedDataUrl;
+stopCameraStream();
+setPhoto(url);
+});
+$("fallbackCaptureBtn").addEventListener("click", function(){ $("cameraFileInput").click(); });
+$("fallbackFileBtn").addEventListener("click", function(){
+stopCameraStream();
+$("stageCamera").classList.add("hidden");
+stageUpload.classList.remove("hidden");
+fileInput.click();
+});
+$("cameraFileInput").addEventListener("change", function(){
+var inp=$("cameraFileInput");
+if(inp.files && inp.files[0]){
+stopCameraStream();
+$("stageCamera").classList.add("hidden");
+stageUpload.classList.remove("hidden");
+loadFile(inp.files[0]);
+}
+inp.value="";
+});
+window.addEventListener("pagehide", stopCameraStream);
+document.addEventListener("visibilitychange", function(){ if(document.hidden) stopCameraStream(); });
+
+/* ---------- 画像解析 ---------- */
+function analyze(img){
+var S=72;
+ctx.clearRect(0,0,S,S);
+// 中央を正方形に切り取って描画
+var side=Math.min(img.naturalWidth, img.naturalHeight);
+var sx=(img.naturalWidth-side)/2, sy=(img.naturalHeight-side)/2;
+ctx.drawImage(img, sx, sy, side, side, 0, 0, S, S);
+var d=ctx.getImageData(0,0,S,S).data;
+var n=S*S, sumR=0,sumG=0,sumB=0,sumLum=0, lumArr=new Float32Array(n);
+for(var i=0;i<n;i++){
+var r=d[i*4],g=d[i*4+1],b=d[i*4+2];
+sumR+=r; sumG+=g; sumB+=b;
+var lum=0.2126*r+0.7152*g+0.0722*b;
+lumArr[i]=lum; sumLum+=lum;
+}
+var meanR=sumR/n, meanG=sumG/n, meanB=sumB/n, meanLum=sumLum/n;
+var variance=0, satSum=0, edgeSum=0, edgeCount=0;
+for(var y=0;y<S;y++) for(var x=0;x<S;x++){
+var idx=y*S+x, lum=lumArr[idx];
+variance+=(lum-meanLum)*(lum-meanLum);
+var r2=d[idx*4],g2=d[idx*4+1],b2=d[idx*4+2];
+var mx=Math.max(r2,g2,b2), mn=Math.min(r2,g2,b2);
+satSum += mx===0?0:(mx-mn)/mx;
+if(x<S-1){ edgeSum+=Math.abs(lum-lumArr[idx+1]); edgeCount++;}
+if(y<S-1){ edgeSum+=Math.abs(lum-lumArr[idx+S]); edgeCount++;}
+}
+var contrast=Math.sqrt(variance/n); // 0-約110
+var saturation=satSum/n; // 0-1
+var edge=edgeSum/edgeCount; // ディテール量
+// 左右対称性：左半分と右半分（反転）の明るさ差
+var diff=0, cnt=0;
+for(var yy=0; yy<S; yy++) for(var xx=0; xx<S/2; xx++){
+diff+=Math.abs(lumArr[yy*S+xx]-lumArr[yy*S+(S-1-xx)]); cnt++;
+}
+var asymmetry=diff/cnt; // 小さいほど対称
+var warmth=(meanR-meanB); // 暖色度 -255..255
+var hash=0;
+for(var k=0;k<n;k+=37){ hash=(hash*31 + d[k*4])>>>0;}
+var jitter=((hash%13)-6)/100; // 同じ写真では固定の微調整 ±0.06
+
+function clamp01(v){ return Math.max(0.02, Math.min(0.98, v));}
+// 4軸スコア：0.5が境界、E/S/T/J寄りが >0.5
+var ei = clamp01(0.30 + (meanLum/255)*0.45 + saturation*0.35 + jitter);
+var sn = clamp01(0.78 - (edge/38)*0.55 - saturation*0.12 + jitter*0.7); // ディテール多い→S寄り（sn大=S）
+var tf = clamp01(0.34 + (contrast/110)*0.42 + (1-Math.min(1,asymmetry/40))*0.18 - Math.max(0,warmth)/255*0.25 + jitter*0.7); // tf大=T
+var jp = clamp01(0.30 + (1-Math.min(1,asymmetry/42))*0.45 + (contrast/110)*0.22 + jitter*0.7); // jp大=J
+
+var code=(ei>=0.5?"E":"I")+(sn>=0.5?"S":"N")+(tf>=0.5?"T":"F")+(jp>=0.5?"J":"P");
+return {
+code:code, ei:ei, sn:sn, tf:tf, jp:jp,
+raw:{ brightness:Math.round(meanLum/255*100), warmth:Math.round(((warmth+80)/160)*100),
+saturation:Math.round(saturation*100), contrast:Math.round(contrast/110*100),
+symmetry:Math.max(0,Math.round(100-asymmetry/45*100)), detail:Math.min(100,Math.round(edge/38*100))}
+};
+}
+
+/* ---------- 診断フロー ---------- */
+var STEPS=[
+["顔を検出しています","輪郭とパーツの位置を読み取り中…"],
+["表情と明るさを測定中","笑顔の強さと光の当たり方をチェック…"],
+["色合いと雰囲気を分析中","暖色・寒色のバランスを見ています…"],
+["左右バランスを照合中","16タイプの特徴データと照らし合わせ…"],
+["タイプを決定しています","あと少しで結果が出ます…"]
+];
+var running=false;
+$("startBtn").addEventListener("click", function(){
+if(running) return;
+stopCameraStream();
+var img=new Image();
+img.onload=function(){
+current.metrics=analyze(img);
+runAnimation();
+};
+img.onerror=function(){ showToast("写真の解析に失敗しました。別の写真で試してください");};
+img.src=current.dataUrl;
+});
+function runAnimation(){
+running=true;
+previewCard.classList.add("analyzing");
+previewActions.classList.add("hidden");
+progressWrap.classList.remove("hidden"); metricsEl.classList.remove("hidden");
+metricsEl.innerHTML="";
+var raw=current.metrics.raw;
+var chips=[
+["明るさ", raw.brightness], ["暖色度", Math.max(0,Math.min(100,raw.warmth))],
+["鮮やかさ", raw.saturation], ["コントラスト", raw.contrast],
+["左右バランス", raw.symmetry], ["ディテール", raw.detail]
+];
+var stepIdx=0, shown=0;
+statusStep.textContent=STEPS[0][0]; statusSub.textContent=STEPS[0][1];
+progressBar.style.width="4%";
+var total=3400, started=Date.now();
+var timer=setInterval(function(){
+var p=Math.min(1,(Date.now()-started)/total);
+progressBar.style.width=Math.round(4+p*96)+"%";
+var want=Math.floor(p*STEPS.length);
+if(want>stepIdx && want<STEPS.length){ stepIdx=want; statusStep.textContent=STEPS[stepIdx][0]; statusSub.textContent=STEPS[stepIdx][1];}
+var wantChips=Math.floor(p*chips.length);
+while(shown<wantChips && shown<chips.length){
+var s=document.createElement("span");
+s.innerHTML=chips[shown][0]+" <b>"+chips[shown][1]+"</b>";
+metricsEl.appendChild(s); shown++;
+}
+if(p>=1){ clearInterval(timer); running=false; showResult(true);}
+},90);
+}
+
+/* ---------- 結果表示 ---------- */
+function dimRow(leftLabel, rightLabel, score, leftWins, color){
+var pct=Math.round(score*100);
+var leftPct = leftWins? pct: 100-pct;
+var fillFromLeft = leftWins;
+var w = fillFromLeft? pct: pct;
+var style = fillFromLeft
+? "left:0;width:"+w+"%;background:"+color
+: "right:0;width:"+w+"%;background:"+color;
+var winner = leftWins? leftLabel: rightLabel;
+return '<div><div class="dim-row"><span>'+leftLabel+'</span><div class="dim-track"><div class="dim-fill" style="'+style+'"></div></div><span class="r">'+rightLabel+'</span></div><div class="dim-pct">'+winner+" "+Math.max(pct,100-pct)+"%</div></div>";
+}
+function showResult(isDiagnosis){
+stopCameraStream();
+var sc2=$("stageCamera"); if(sc2) sc2.classList.add("hidden");
+var m=current.metrics, t=TYPES[m.code], g=GROUPS[t.g];
+current.result=m.code;
+renderMissionResult(isDiagnosis);
+shareCanvas=null;
+$("resultPhoto").src=current.dataUrl;
+$("resultHead").style.background=g.color;
+$("resultGroup").textContent=g.label;
+$("resultCode").textContent=m.code;
+$("resultName").textContent=t.name+"タイプ";
+$("resultCatch").textContent="― "+t.catch+" ―";
+$("resultDesc").textContent=t.desc;
+$("resultTags").innerHTML=t.tags.map(function(x){ return "<span>#"+x+"</span>";}).join("");
+$("resultStrong").textContent=t.strong;
+$("resultWeak").textContent=t.weak;
+$("resultLove").textContent=t.love;
+$("resultWork").textContent=t.work;
+var matchEl=$("resultMatch"); matchEl.innerHTML="";
+t.match.forEach(function(code){
+var mt=TYPES[code];
+var b=document.createElement("button");
+b.type="button"; b.textContent=code+"（"+mt.name+"）";
+b.style.background=GROUPS[mt.g].color;
+b.addEventListener("click", function(){ previewType(code);});
+matchEl.appendChild(b);
+});
+$("dims").innerHTML =
+dimRow("外向 E","内向 I", m.ei, m.ei>=0.5, "#FF6B4A") +
+dimRow("感覚 S","直観 N", m.sn, m.sn>=0.5, "#E8A020") +
+dimRow("思考 T","感情 F", m.tf, m.tf>=0.5, "#3E7CB8") +
+dimRow("判断 J","知覚 P", m.jp, m.jp>=0.5, "#3DAB6B");
+var raw=m.raw;
+$("faceDataList").innerHTML =
+"<li><span>顔全体の明るさ</span><b>"+raw.brightness+" / 100</b></li>"+
+"<li><span>色の鮮やかさ</span><b>"+raw.saturation+" / 100</b></li>"+
+"<li><span>コントラスト（メリハリ）</span><b>"+raw.contrast+" / 100</b></li>"+
+"<li><span>左右バランス</span><b>"+raw.symmetry+" / 100</b></li>"+
+"<li><span>ディテール量</span><b>"+raw.detail+" / 100</b></li>";
+stagePreview.classList.add("hidden");
+stageResult.classList.add("show");
+stageResult.scrollIntoView({behavior:"smooth", block:"start"});
+generateShareCard(function(c){ var pv=$("sharePreview"); pv.src=c.toDataURL("image/jpeg",0.88); pv.classList.remove("hidden"); });
+}
+
+/* ---------- ミッション判定 ---------- */
+function renderMissionResult(isDiagnosis){
+var box=$("missionResult");
+$("confetti").innerHTML="";
+current.missionAchieved=false;
+if(!isDiagnosis){ box.classList.add("hidden"); return; }
+var code=current.metrics.code, target=MISSION.code;
+var matchCount=0, diffs=[];
+for(var i=0;i<4;i++){ if(code[i]===target[i]) matchCount++; else diffs.push(i); }
+var mt=TYPES[target];
+box.classList.remove("hidden","achieved");
+if(code===target){
+current.missionAchieved=true;
+box.classList.add("achieved");
+$("missionResultTitle").textContent="ミッション達成！ すごい！";
+$("missionResultText").textContent="今日のお題「"+MISSION.expr+"」で、目標の "+target+"（"+mt.name+"）にドンピシャ！ その表情、今日いちばんの出来です。この調子でシェアカードも保存してみて。";
+spawnConfetti();
+} else {
+var advices=diffs.map(function(i){ return AXIS_ADVICE[i](target[i]); });
+$("missionResultTitle").textContent = matchCount>=3
+? "あと少し！ 目標まで残り1文字"
+: "今回は "+code+" でした（4文字中"+matchCount+"文字一致）";
+$("missionResultText").textContent="目標は "+target+"（"+mt.name+"）。"+advices.join("／")+"。お題は「"+MISSION.expr+"」です。表情を変えて、もう1枚試してみて！";
+}
+}
+function spawnConfetti(){
+var wrap=$("confetti");
+var colors=["#FFC531","#FF6B4A","#0FB5A6","#FF7AA8","#4A90D9","#FFFFFF"];
+for(var i=0;i<28;i++){
+var p=document.createElement("i");
+p.style.left=(Math.random()*100)+"%";
+p.style.background=colors[i%colors.length];
+p.style.animationDelay=(Math.random()*0.5)+"s";
+p.style.animationDuration=(1.2+Math.random()*0.9)+"s";
+p.style.transform="rotate("+(Math.random()*180)+"deg)";
+wrap.appendChild(p);
+}
+}
+function previewType(code){
+var t=TYPES[code], g=GROUPS[t.g];
+// 図鑑からの簡易表示：結果カードを流用せず、トーストではなく専用に結果エリアへ仮表示
+current.metrics = current.metrics || { code:code, ei:code[0]==="E"?0.75:0.25, sn:code[1]==="S"?0.75:0.25, tf:code[2]==="T"?0.75:0.25, jp:code[3]==="J"?0.75:0.25, raw:{brightness:50,saturation:50,contrast:50,symmetry:50,detail:50}};
+var keepPhoto = current.dataUrl;
+current.metrics.code=code;
+if(!keepPhoto){
+var c=document.createElement("canvas"); c.width=200; c.height=200;
+var gg=c.getContext("2d"); gg.fillStyle=g.color; gg.fillRect(0,0,200,200);
+gg.fillStyle="#fff"; gg.font="900 84px sans-serif"; gg.textAlign="center"; gg.textBaseline="middle";
+gg.fillText(code[0],100,104);
+current.dataUrl=c.toDataURL("image/png");
+}
+showResult(false);
+if(!keepPhoto){ statusNote();}
+}
+function statusNote(){ showToast("図鑑からの表示です。写真で診断すると顔データも出ます");}
+
+$("againBtn").addEventListener("click", function(){
+stopCameraStream();
+stageResult.classList.remove("show");
+current.dataUrl=null;
+stageUpload.classList.remove("hidden");
+stageUpload.scrollIntoView({behavior:"smooth"});
+});
+$("copyBtn").addEventListener("click", function(){
+if(!current.result) return;
+var t=TYPES[current.result];
+var text="私の顔タイプは "+current.result+"（"+t.name+"）でした！\n― "+t.catch+" ―\n#顔写真MBTI診断 #MBTI";
+function done(){ showToast("結果をコピーしました");}
+if(navigator.clipboard && navigator.clipboard.writeText){
+navigator.clipboard.writeText(text).then(done, function(){ fallbackCopy(text); done();});
+} else { fallbackCopy(text); done();}
+});
+/* ---------- シェア画像カード生成（縦長 1080×1920） ---------- */
+function rr(g,x,y,w,h,r){
+g.beginPath();
+g.moveTo(x+r,y);
+g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r);
+g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r);
+g.closePath();
+}
+function generateShareCard(done){
+var m=current.metrics, t=TYPES[m.code], g=GROUPS[t.g];
+var c=document.createElement("canvas"); c.width=1080; c.height=1920;
+var x=c.getContext("2d");
+function draw(img){
+/* 背景＝グループカラー、内側にクリームのカード */
+x.fillStyle=g.color; x.fillRect(0,0,1080,1920);
+x.fillStyle="#FFF8EE"; rr(x,48,48,984,1824,48); x.fill();
+/* 見出し */
+x.fillStyle="#2B2118"; x.textAlign="center"; x.textBaseline="middle";
+x.font="800 40px 'M PLUS Rounded 1c', sans-serif";
+x.fillText("顔写真 MBTI 診断", 540, 138);
+/* 写真（円形・中央クロップ） */
+var cx=540, cy=452, rad=196;
+x.save();
+x.beginPath(); x.arc(cx,cy,rad,0,Math.PI*2); x.clip();
+if(img && img.naturalWidth){
+var side=Math.min(img.naturalWidth, img.naturalHeight);
+x.drawImage(img, (img.naturalWidth-side)/2, (img.naturalHeight-side)/2, side, side, cx-rad, cy-rad, rad*2, rad*2);
+} else {
+x.fillStyle=g.color; x.fillRect(cx-rad,cy-rad,rad*2,rad*2);
+x.fillStyle="#fff"; x.font="900 150px 'Zen Maru Gothic', sans-serif";
+x.fillText(m.code[0], cx, cy+6);
+}
+x.restore();
+x.lineWidth=10; x.strokeStyle="#FFFFFF";
+x.beginPath(); x.arc(cx,cy,rad,0,Math.PI*2); x.stroke();
+/* ミッション達成スタンプ */
+if(current.missionAchieved){
+x.save(); x.translate(838,168); x.rotate(-0.18);
+x.lineWidth=5; x.strokeStyle="#E84E2C"; rr(x,-168,-46,336,92,16); x.stroke();
+x.fillStyle="#E84E2C"; x.font="900 44px 'Zen Maru Gothic', sans-serif";
+x.fillText("ミッション達成！", 0, 2);
+x.restore();
+}
+/* タイプ情報 */
+x.fillStyle=g.color; x.font="800 36px 'M PLUS Rounded 1c', sans-serif";
+x.fillText(g.label, 540, 726);
+x.font="900 168px 'Zen Maru Gothic', sans-serif";
+x.fillText(m.code, 540, 838);
+x.fillStyle="#2B2118"; x.font="900 66px 'Zen Maru Gothic', sans-serif";
+x.fillText(t.name+"タイプ", 540, 962);
+x.fillStyle="#6B5D4F"; x.font="700 42px 'M PLUS Rounded 1c', sans-serif";
+x.fillText("― "+t.catch+" ―", 540, 1042);
+/* 4軸バー */
+var dims=[
+["外向 E","内向 I","E","I", m.ei, "#FF6B4A"],
+["感覚 S","直観 N","S","N", m.sn, "#D98E04"],
+["思考 T","感情 F","T","F", m.tf, "#3E7CB8"],
+["判断 J","知覚 P","J","P", m.jp, "#3DAB6B"]
+];
+dims.forEach(function(d, i){
+var y=1130+i*148;
+x.font="800 36px 'M PLUS Rounded 1c', sans-serif"; x.fillStyle="#2B2118";
+x.textAlign="left"; x.fillText(d[0], 96, y);
+x.textAlign="right"; x.fillText(d[1], 984, y);
+x.textAlign="center";
+x.fillStyle="#F0DEC3"; rr(x,96,y+26,888,38,19); x.fill();
+var pct=Math.round(d[4]*100), win=Math.max(pct,100-pct), w=888*win/100;
+x.fillStyle=d[5];
+if(d[4]>=0.5){ rr(x,96,y+26,w,38,19); } else { rr(x,96+888-w,y+26,w,38,19); }
+x.fill();
+x.fillStyle="#6B5D4F"; x.font="800 32px 'M PLUS Rounded 1c', sans-serif";
+x.fillText((d[4]>=0.5? d[2]: d[3])+" "+win+"%", 540, y+96);
+});
+/* フッター */
+x.fillStyle="#2B2118"; x.font="800 40px 'M PLUS Rounded 1c', sans-serif";
+x.fillText("#顔写真MBTI診断 #MBTI", 540, 1796);
+shareCanvas=c;
+if(done) done(c);
+}
+if(current.dataUrl){
+var img=new Image();
+img.onload=function(){ draw(img); };
+img.onerror=function(){ draw(null); };
+img.src=current.dataUrl;
+} else { draw(null); }
+}
+function downloadCard(){
+function go(){
+var name="mbti-card-"+current.result+".png";
+if(shareCanvas.toBlob){
+shareCanvas.toBlob(function(b){
+var url=URL.createObjectURL(b);
+var a=document.createElement("a"); a.href=url; a.download=name;
+document.body.appendChild(a); a.click(); document.body.removeChild(a);
+setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+showToast("シェア画像を保存しました");
+}, "image/png");
+} else {
+var a=document.createElement("a"); a.href=shareCanvas.toDataURL("image/png"); a.download=name;
+document.body.appendChild(a); a.click(); document.body.removeChild(a);
+showToast("シェア画像を保存しました");
+}
+}
+if(shareCanvas){ go(); } else { generateShareCard(go); }
+}
+$("cardBtn").addEventListener("click", downloadCard);
+
+function fallbackCopy(text){
+var ta=document.createElement("textarea");
+ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+document.body.appendChild(ta); ta.select();
+try{ document.execCommand("copy");}catch(e){}
+document.body.removeChild(ta);
+}
+
+/* ---------- 16タイプ図鑑 ---------- */
+var grid=$("typeGrid");
+ORDER.forEach(function(code){
+var t=TYPES[code];
+var b=document.createElement("button");
+b.type="button"; b.className="type-cell";
+b.style.background=GROUPS[t.g].color;
+b.innerHTML='<span class="code">'+code+'</span><span class="nm">'+t.name+'</span>';
+b.setAttribute("aria-label", code+" "+t.name+"タイプの説明を見る");
+b.addEventListener("click", function(){ previewType(code);});
+grid.appendChild(b);
+});
+})();
+</script>
+</body>
+</html>
