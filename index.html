@@ -18,17 +18,18 @@
 --axis-ei:#FF6B4A; --axis-sn:#E8A020; --axis-tf:#3E7CB8; --axis-jp:#35945E;
 --group-analyst:#7A5AC0; --group-diplomat:#35945E; --group-sentinel:#3A76B5; --group-explorer:#DE9512;
 --paper:#FFF8EE; --paper-ink:#2B2118; --paper-sub:#6B5D4F; --paper-line:#F0DEC3;
---drop-border:#EFC98F; --highlight2:var(--teal-d); --metric-val:var(--coral-d); --mission-expr:var(--coral-d);
+--drop-border:#EFC98F; --metric-val:var(--coral-d);
 --achieved-bg:#FFF3D1; --achieved-title:var(--coral-d); --focus-ring:#0FB5A6;
 --shadow:0 10px 30px rgba(90,55,10,.10);
 --r-card:28px; --r-box:16px; --r-pill:999px;
 --fs-note:12px; --fs-sub:13.5px; --fs-body:15.5px;
+--fs-lead:17px; --fs-step:18px; --fs-subtitle:19px; --fs-h2:21px; --fs-h2-lg:24px; --fs-mission:clamp(17px,4.6vw,20px);
 }
 @media (prefers-color-scheme: dark){
 :root{
 --bg:#1C1712; --bg2:#241C15; --card:#2A211A; --card2:#33281E;
 --ink:#FFF3E2; --ink2:#CBBBA6; --line:#4A3A2A;
---drop-border:#6B543A; --highlight2:var(--teal); --metric-val:var(--yellow); --mission-expr:#FF9E8A;
+--drop-border:#6B543A; --metric-val:var(--yellow);
 --achieved-bg:#4A3A14; --achieved-title:var(--yellow); --focus-ring:var(--yellow);
 --shadow:0 10px 30px rgba(0,0,0,.35);
 }
@@ -45,8 +46,8 @@ button{font-family:inherit;cursor:pointer}
 .badge i{width:7px;height:7px;border-radius:50%;background:var(--yellow);display:inline-block}
 h1{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:clamp(34px,8vw,56px);line-height:1.08;margin:16px 0 10px;letter-spacing:.01em}
 h1 .hl{color:var(--coral)}
-h1 .hl2{color:var(--highlight2)}
-.lead{color:var(--ink2);font-size:17px;font-weight:700;max-width:560px;margin:0 auto;line-height:1.7}
+h1 .hl2{color:var(--ink)}
+.lead{color:var(--ink2);font-size:var(--fs-lead);font-weight:700;max-width:560px;margin:0 auto;line-height:1.7}
 .lead b{color:var(--ink)}
 .hero-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
 .hero-tags span{font-size:var(--fs-note);font-weight:800;background:var(--card);border:1.5px solid var(--line);padding:7px 12px;border-radius:var(--r-pill)}
@@ -64,7 +65,7 @@ h1 .hl2{color:var(--highlight2)}
 .face-illo .scan{position:absolute;left:-4px;right:-4px;top:8px;height:26px;background:linear-gradient(180deg,transparent,rgba(15,181,166,.35),transparent);border-bottom:2px solid var(--teal);animation:scan 2.4s ease-in-out infinite}
 @keyframes scan{0%,100%{top:6px}50%{top:84px}}
 @media (prefers-reduced-motion: reduce){.face-illo .scan{animation:none}}
-.drop h2{font-family:"Zen Maru Gothic",sans-serif;font-size:21px;margin:0 0 6px}
+.drop h2{font-family:"Zen Maru Gothic",sans-serif;font-size:var(--fs-h2);margin:0 0 6px}
 .drop p{color:var(--ink2);font-size:var(--fs-sub);font-weight:700;margin:0 0 18px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:var(--r-pill);font-weight:800;font-size:var(--fs-body);padding:13px 26px;min-height:48px;transition:transform.12s, opacity.2s}
 .btn:active{transform:scale(.97)}
@@ -93,7 +94,7 @@ h1 .hl2{color:var(--highlight2)}
 .corner.bl{bottom:10px;left:10px;border-right:none;border-top:none;border-radius:0 0 0 8px}
 .corner.br{bottom:10px;right:10px;border-left:none;border-top:none;border-radius:0 0 8px 0}
 .status{margin-top:18px;min-height:56px}
-.status .step{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:18px}
+.status .step{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-step)}
 .status .sub{color:var(--ink2);font-size:var(--fs-sub);font-weight:700}
 .bar{height:12px;background:var(--bg2);border-radius:var(--r-pill);overflow:hidden;margin:14px auto 4px;max-width:420px;border:1.5px solid var(--line)}
 .bar i{display:block;height:100%;width:0%;background:repeating-linear-gradient(45deg,var(--teal) 0 10px,#0CA696 10px 20px);border-radius:var(--r-pill);transition:width.25s}
@@ -110,7 +111,7 @@ h1 .hl2{color:var(--highlight2)}
 .result-head{padding:26px 22px 20px;text-align:center;color:#fff;position:relative}
 .result-head .group{font-size:var(--fs-note);font-weight:800;letter-spacing:.14em;opacity:.92}
 .mbti-letters{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:clamp(56px,15vw,84px);line-height:1;letter-spacing:.04em;margin:8px 0 4px;text-shadow:0 4px 0 rgba(0,0,0,.14)}
-.type-name{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:24px}
+.type-name{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-h2-lg)}
 .type-catch{font-size:var(--fs-sub);font-weight:700;opacity:.95;margin-top:4px}
 .result-photo{width:86px;height:86px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.9);margin:0 auto 6px;display:block;background:#ddd}
 .result-body{padding:22px}
@@ -138,7 +139,7 @@ h1 .hl2{color:var(--highlight2)}
 /* CAMERA */
 .upload-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .upload-actions .btn svg{flex:none}
-.camera-card h2{font-family:"Zen Maru Gothic",sans-serif;font-size:21px;margin:0 0 6px}
+.camera-card h2{font-family:"Zen Maru Gothic",sans-serif;font-size:var(--fs-h2);margin:0 0 6px}
 .camera-card .cam-lead{color:var(--ink2);font-size:var(--fs-sub);font-weight:700;margin:0 0 16px}
 .cam-frame{position:relative;width:min(340px,82vw);aspect-ratio:1;margin:0 auto;border-radius:var(--r-box);overflow:hidden;background:#111}
 .cam-frame video,.cam-frame img{width:100%;height:100%;object-fit:cover;display:block}
@@ -152,7 +153,7 @@ h1 .hl2{color:var(--highlight2)}
 .cam-guide{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center}
 .cam-guide i{width:62%;height:76%;border:3px dashed rgba(255,255,255,.85);border-radius:50%;display:block;box-shadow:0 0 0 999px rgba(0,0,0,.12)}
 .cam-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:var(--fs-sub);background:rgba(0,0,0,.45);text-align:center;padding:20px}
-.cam-status{margin-top:16px;min-height:28px;font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:17px}
+.cam-status{margin-top:16px;min-height:28px;font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-lead)}
 .cam-status.sub{font-family:inherit;font-weight:700;font-size:var(--fs-sub);color:var(--ink2);min-height:20px;margin-top:0}
 .shutter-btn{width:72px;height:72px;min-height:72px;border-radius:50%;border:5px solid var(--card);outline:3px solid var(--coral);background:var(--coral);color:#fff;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.18);transition:transform.12s}
 .shutter-btn:active{transform:scale(.93)}
@@ -168,13 +169,13 @@ h1 .hl2{color:var(--highlight2)}
 .mission{margin-top:18px;background:var(--card);border:2px solid var(--yellow);border-radius:var(--r-card);box-shadow:var(--shadow);padding:14px 18px}
 .mission-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:var(--fs-note);font-weight:800;letter-spacing:.08em;color:var(--ink2)}
 .mission-head .mission-badge{background:var(--yellow);color:#4A3200;border-radius:var(--r-pill);padding:4px 11px;letter-spacing:.04em}
-.mission-main{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:clamp(17px,4.6vw,20px);line-height:1.35;margin:10px 0 6px}
-.mission-main .mission-expr{color:var(--mission-expr)}
+.mission-main{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-mission);line-height:1.35;margin:10px 0 6px}
+.mission-main .mission-expr{color:var(--ink);background:linear-gradient(transparent 64%, var(--yellow) 64%);padding:0 2px}
 .mission-target{display:inline-block;color:#fff;border-radius:var(--r-pill);padding:1px 10px;margin:0 2px;vertical-align:baseline}
 .mission-hint{margin:0;font-size:var(--fs-sub);font-weight:700;color:var(--ink2)}
 .mission-hint b{color:var(--ink)}
 .mission-result{border-radius:var(--r-box);padding:16px 18px;margin-bottom:18px;border:2px solid var(--line);background:var(--card2)}
-.mission-result .mr-title{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:19px;margin:0 0 4px}
+.mission-result .mr-title{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-subtitle);margin:0 0 4px}
 .mission-result .mr-text{margin:0;font-size:var(--fs-sub);font-weight:700}
 .mission-result.achieved{border-color:var(--yellow);background:var(--achieved-bg)}
 .mission-result.achieved .mr-title{color:var(--achieved-title)}
@@ -190,13 +191,13 @@ h1 .hl2{color:var(--highlight2)}
 .share-box .actions{margin-top:14px}
 /* 16 TYPES */
 .section{margin-top:44px}
-.section h2{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:24px;margin:0 0 4px;text-align:center}
+.section h2{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-h2-lg);margin:0 0 4px;text-align:center}
 .section .sub{text-align:center;color:var(--ink2);font-weight:700;font-size:var(--fs-sub);margin:0 0 18px}
 .type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 @media (max-width:640px){.type-grid{grid-template-columns:repeat(2,1fr)}}
 .type-cell{border:none;border-radius:var(--r-box);padding:14px 10px 12px;color:#fff;text-align:center;min-height:92px;display:flex;flex-direction:column;justify-content:center;gap:2px;transition:transform.12s}
 .type-cell:active{transform:scale(.96)}
-.type-cell .code{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:21px;letter-spacing:.03em}
+.type-cell .code{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-h2);letter-spacing:.03em}
 .type-cell .nm{font-size:var(--fs-note);font-weight:800;opacity:.95}
 .how{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-card);padding:20px;box-shadow:var(--shadow)}
 .how ol{margin:0;padding-left:20px;display:grid;gap:8px;font-size:var(--fs-sub);font-weight:700}
@@ -225,17 +226,17 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 .stage-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
 .stage-nav .btn{min-height:40px;padding:9px 16px;font-size:var(--fs-sub)}
 .result-top-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:16px 22px 0}
-.result-top-actions .btn-primary{flex:1 1 220px;max-width:340px}
+.result-top-actions .btn{flex:1 1 220px;max-width:340px}
 /* TYPE DETAIL MODAL */
 .modal{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;padding:0}
 @media (min-width:640px){.modal{align-items:center;padding:24px}}
 .modal-backdrop{position:absolute;inset:0;background:rgba(30,20,10,.55)}
-.modal-card{position:relative;background:var(--card);color:var(--ink);width:100%;max-width:520px;max-height:88vh;overflow:auto;border-radius:24px 24px 0 0;box-shadow:var(--shadow);border:1.5px solid var(--line)}
-@media (min-width:640px){.modal-card{border-radius:24px}}
+.modal-card{position:relative;background:var(--card);color:var(--ink);width:100%;max-width:520px;max-height:88vh;overflow:auto;border-radius:var(--r-card) var(--r-card) 0 0;box-shadow:var(--shadow);border:1.5px solid var(--line)}
+@media (min-width:640px){.modal-card{border-radius:var(--r-card)}}
 .modal-head{padding:22px 22px 16px;text-align:center;color:#fff;position:relative}
 .modal-head .group{font-size:var(--fs-note);font-weight:800;letter-spacing:.14em;opacity:.92}
 .modal-head .code{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:52px;line-height:1.05}
-.modal-head .nm{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:21px}
+.modal-head .nm{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-h2)}
 .modal-head .catch{font-size:var(--fs-sub);font-weight:700;opacity:.95}
 .modal-body{padding:18px 22px 22px}
 .modal-body .desc{margin-bottom:14px}
@@ -367,8 +368,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <div class="type-catch" id="resultCatch"></div>
 </div>
 <div class="result-top-actions">
-<button class="btn btn-primary" id="againBtnTop" type="button">別の写真でもう一度診断</button>
-<button class="btn btn-ghost" id="homeBtnTop2" type="button">トップに戻る</button>
+<button class="btn btn-ghost" id="againBtnTop" type="button">別の写真でもう一度診断</button>
 </div>
 <div class="result-body">
 <div class="mission-result hidden" id="missionResult">
@@ -401,10 +401,6 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <ul id="faceDataList"></ul>
 </div>
 </details>
-<div class="actions">
-<button class="btn btn-primary" id="againBtn" type="button">別の写真でもう一度診断</button>
-<button class="btn btn-ghost" id="homeBtnBottom" type="button">トップに戻る</button>
-</div>
 </div>
 </div>
 </section>
@@ -457,7 +453,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <div class="mini"><h3>仕事スタイル</h3><p id="modalWork"></p></div>
 </div>
 <div class="actions">
-<button class="btn btn-primary" id="typeModalBackBtn" type="button">閉じて戻る</button>
+<button class="btn btn-ghost" id="typeModalBackBtn" type="button">閉じて戻る</button>
 </div>
 </div>
 </div>
@@ -486,6 +482,14 @@ diplomat: { label:"外交官グループ", color:cssVar("--group-diplomat", "#35
 sentinel: { label:"番人グループ", color:cssVar("--group-sentinel", "#3A76B5")},
 explorer: { label:"探検家グループ", color:cssVar("--group-explorer", "#DE9512")}
 };
+/* 16タイプ色：グループの色相を保ちつつ、明度・彩度を近いレンジに揃えた16色（方針1.0の根拠マップどおり） */
+var TYPE_COLORS = {
+INTJ:"#6D4FB0", INTP:"#7E63C4", ENTJ:"#5B3FA3", ENTP:"#8A6FD1",
+INFJ:"#2E7D5B", INFP:"#3E9A6E", ENFJ:"#27714F", ENFP:"#4CAF7D",
+ISTJ:"#35679E", ISFJ:"#4A84B8", ESTJ:"#2C5C8C", ESFJ:"#5B97C9",
+ISTP:"#C47F17", ISFP:"#D99A2B", ESTP:"#B96E0E", ESFP:"#E8A81C"
+};
+function typeColor(code){ return TYPE_COLORS[code] || GROUPS[TYPES[code].g].color; }
 var TYPES = {
 INTJ:{g:"analyst", name:"建築家", catch:"静かな顔に、大きな設計図", desc:"落ち着いた表情の奥に、先の先まで見通す視点が隠れているタイプ。写真の整ったバランス感から、感情に流されず自分の計画を淡々と進める「戦略家」の空気が漂います。群れるより、一人で考える時間にこそ力を発揮します。", tags:["戦略家","独立心","完璧主義"], strong:"長期計画を立てて、ブレずに実行できるところ", weak:"説明が端的すぎて、冷たいと誤解されがち", love:"好意は言葉より行動と時間の使い方で示すタイプ", work:"仕組みから作り直す仕事で真価を発揮", match:["ENFP","ENTP"]},
 INTP:{g:"analyst", name:"論理学者", catch:"ぼんやり顔の、好奇心モンスター", desc:"どこか遠くを見ているような表情が印象的。頭の中では常に「なんで？」が渦巻いていて、興味を持ったテーマは深夜まで掘り下げてしまうタイプです。写真の柔らかいコントラストから、物腰は穏やかでも思考は鋭いギャップが見えます。", tags:["好奇心","分析好き","マイペース"], strong:"物事の仕組みを素早く見抜く洞察力", weak:"興味のないことへの集中力が続きにくい", love:"知的な会話が弾む相手に惹かれる", work:"研究・分析・仕様を詰める場面で輝く", match:["ENTJ","ESTJ"]},
@@ -556,6 +560,10 @@ toast.textContent=msg; toast.classList.add("show");
 clearTimeout(toastTimer);
 toastTimer=setTimeout(function(){ toast.classList.remove("show");},2400);
 }
+/* ミッションカードはホーム（写真を選ぶ画面）だけに出す。撮影中・確認中・結果では主役を譲る */
+function setMissionVisible(v){
+var mc=$("missionCard"); if(mc) mc.classList.toggle("hidden", !v);
+}
 
 /* ---------- ミッションカード表示 ---------- */
 (function(){
@@ -565,8 +573,8 @@ $("missionExpr").textContent=MISSION.expr;
 var targetEl=$("missionTarget");
 var mt=TYPES[MISSION.code];
 targetEl.textContent=MISSION.code+"（"+mt.name+"）";
-targetEl.style.background=GROUPS[mt.g].color;
-targetEl.style.color=textOn(GROUPS[mt.g].color);
+targetEl.style.background=typeColor(MISSION.code);
+targetEl.style.color=textOn(typeColor(MISSION.code));
 $("missionHint").textContent=MISSION.hint;
 })();
 
@@ -635,6 +643,7 @@ reader.readAsDataURL(file);
 }
 function setPhoto(dataUrl){
 stopCameraStream();
+setMissionVisible(false);
 var sc=$("stageCamera"); if(sc) sc.classList.add("hidden");
 current.dataUrl=dataUrl; current.metrics=null; current.result=null; current.missionAchieved=false; shareCanvas=null;
 previewImg.src=dataUrl;
@@ -652,6 +661,7 @@ $("changeBtn").addEventListener("click", function(){
 stopCameraStream();
 stagePreview.classList.add("hidden");
 stageUpload.classList.remove("hidden");
+setMissionVisible(true);
 stageUpload.scrollIntoView({behavior:"smooth"});
 });
 
@@ -709,6 +719,7 @@ $("cameraSub").textContent="下のボタンから、撮った写真や手持ち�
 function startCamera(opts){
 opts=opts||{};
 var stageCamera=$("stageCamera");
+setMissionVisible(false);
 stageUpload.classList.add("hidden");
 stageResult.classList.remove("show");
 stagePreview.classList.add("hidden");
@@ -772,6 +783,7 @@ function closeCameraToUpload(){
 stopCameraStream();
 $("stageCamera").classList.add("hidden");
 stageUpload.classList.remove("hidden");
+setMissionVisible(true);
 stageUpload.scrollIntoView({behavior:"smooth"});
 }
 function capturePhoto(){
@@ -809,13 +821,16 @@ $("usePhotoBtn").addEventListener("click", function(){
 if(!capturedDataUrl){ showToast("もう一度撮影してください"); return; }
 var url=capturedDataUrl;
 stopCameraStream();
+/* カメラで撮った写真は確認済みなので、プレビュー確認を挟まずそのまま診断へ進む */
 setPhoto(url);
+startDiagnosis();
 });
 $("fallbackCaptureBtn").addEventListener("click", function(){ $("cameraFileInput").click(); });
 $("fallbackFileBtn").addEventListener("click", function(){
 stopCameraStream();
 $("stageCamera").classList.add("hidden");
 stageUpload.classList.remove("hidden");
+setMissionVisible(true);
 fileInput.click();
 });
 $("cameraFileInput").addEventListener("change", function(){
@@ -824,6 +839,7 @@ if(inp.files && inp.files[0]){
 stopCameraStream();
 $("stageCamera").classList.add("hidden");
 stageUpload.classList.remove("hidden");
+setMissionVisible(true);
 loadFile(inp.files[0]);
 }
 inp.value="";
@@ -901,15 +917,17 @@ symmetry:Math.max(0,Math.round(100-asymmetry/45*100)), detail:Math.min(100,Math.
 
 /* ---------- 診断フロー ---------- */
 var STEPS=[
-["顔を検出しています","輪郭とパーツの位置を読み取り中…"],
-["表情と明るさを測定中","笑顔の強さと光の当たり方をチェック…"],
-["色合いと雰囲気を分析中","暖色・寒色のバランスを見ています…"],
-["左右バランスを照合中","16タイプの特徴データと照らし合わせ…"],
-["タイプを決定しています","あと少しで結果が出ます…"]
+["明るさを測っています","写真全体の明るさを見ています…"],
+["色合いを測っています","暖かさと鮮やかさを見ています…"],
+["メリハリを測っています","コントラストと細かさを見ています…"],
+["左右バランスを測っています","明るさの左右差を見ています…"],
+["タイプを決めています","4つの軸から近いタイプを選んでいます…"]
 ];
 var running=false;
-$("startBtn").addEventListener("click", function(){
-if(running) return;
+var diagnosisCount=0;
+var finishAnimation=null;
+function startDiagnosis(){
+if(running || !current.dataUrl) return;
 stopCameraStream();
 var img=new Image();
 img.onload=function(){
@@ -918,6 +936,11 @@ runAnimation();
 };
 img.onerror=function(){ showToast("写真の解析に失敗しました。別の写真で試してください");};
 img.src=current.dataUrl;
+}
+$("startBtn").addEventListener("click", startDiagnosis);
+/* 演出中はプレビューをタップすると結果へスキップできる */
+previewCard.addEventListener("click", function(){
+if(running && finishAnimation) finishAnimation();
 });
 function runAnimation(){
 running=true;
@@ -932,39 +955,48 @@ var chips=[
 ["左右バランス", raw.symmetry], ["ディテール", raw.detail]
 ];
 var stepIdx=0, shown=0;
-statusStep.textContent=STEPS[0][0]; statusSub.textContent=STEPS[0][1];
+statusStep.textContent=STEPS[0][0]; statusSub.textContent=STEPS[0][1]+"（タップでスキップ）";
 progressBar.style.width="4%";
-var total=3400, started=Date.now();
-var timer=setInterval(function(){
-if(stagePreview.classList.contains("hidden")){ clearInterval(timer); running=false; return; }
+/* 初回はじっくり、2回目以降は短めにして反復利用の待ち時間を減らす */
+var total=diagnosisCount>0 ? 1600 : 3400;
+diagnosisCount++;
+var started=Date.now();
+var timer=null;
+function finish(){
+if(!running) return;
+clearInterval(timer); running=false; finishAnimation=null;
+showResult(true);
+}
+finishAnimation=finish;
+timer=setInterval(function(){
+if(stagePreview.classList.contains("hidden")){ clearInterval(timer); running=false; finishAnimation=null; return; }
 var p=Math.min(1,(Date.now()-started)/total);
 progressBar.style.width=Math.round(4+p*96)+"%";
 var want=Math.floor(p*STEPS.length);
-if(want>stepIdx && want<STEPS.length){ stepIdx=want; statusStep.textContent=STEPS[stepIdx][0]; statusSub.textContent=STEPS[stepIdx][1];}
+if(want>stepIdx && want<STEPS.length){ stepIdx=want; statusStep.textContent=STEPS[stepIdx][0]; statusSub.textContent=STEPS[stepIdx][1]+"（タップでスキップ）";}
 var wantChips=Math.floor(p*chips.length);
 while(shown<wantChips && shown<chips.length){
 var s=document.createElement("span");
 s.innerHTML=chips[shown][0]+" <b>"+chips[shown][1]+"</b>";
 metricsEl.appendChild(s); shown++;
 }
-if(p>=1){ clearInterval(timer); running=false; showResult(true);}
+if(p>=1){ finish(); }
 },90);
 }
 
 /* ---------- 結果表示 ---------- */
 function dimRow(leftLabel, rightLabel, score, leftWins, color){
 var pct=Math.round(score*100);
-var leftPct = leftWins? pct: 100-pct;
-var fillFromLeft = leftWins;
-var w = fillFromLeft? pct: pct;
-var style = fillFromLeft
-? "left:0;width:"+w+"%;background:"+color
-: "right:0;width:"+w+"%;background:"+color;
+var winPct=Math.max(pct,100-pct);
+var style = leftWins
+? "left:0;width:"+winPct+"%;background:"+color
+: "right:0;width:"+winPct+"%;background:"+color;
 var winner = leftWins? leftLabel: rightLabel;
-return '<div><div class="dim-row"><span>'+leftLabel+'</span><div class="dim-track"><div class="dim-fill" style="'+style+'"></div></div><span class="r">'+rightLabel+'</span></div><div class="dim-pct">'+winner+" "+Math.max(pct,100-pct)+"%</div></div>";
+return '<div><div class="dim-row"><span>'+leftLabel+'</span><div class="dim-track"><div class="dim-fill" style="'+style+'"></div></div><span class="r">'+rightLabel+'</span></div><div class="dim-pct">'+winner+" "+winPct+"%</div></div>";
 }
 function showResult(isDiagnosis){
 stopCameraStream();
+setMissionVisible(false);
 var sc2=$("stageCamera"); if(sc2) sc2.classList.add("hidden");
 var m=current.metrics, t=TYPES[m.code], g=GROUPS[t.g];
 current.result=m.code;
@@ -972,8 +1004,8 @@ renderMissionResult(isDiagnosis);
 var rd=$("resultDetails"); if(rd) rd.open=false;
 shareCanvas=null;
 $("resultPhoto").src=current.dataUrl;
-$("resultHead").style.background=g.color;
-$("resultHead").style.color=textOn(g.color);
+$("resultHead").style.background=typeColor(m.code);
+$("resultHead").style.color=textOn(typeColor(m.code));
 $("resultGroup").textContent=g.label;
 $("resultCode").textContent=m.code;
 $("resultName").textContent=t.name+"タイプ";
@@ -989,8 +1021,8 @@ t.match.forEach(function(code){
 var mt=TYPES[code];
 var b=document.createElement("button");
 b.type="button"; b.textContent=code+"（"+mt.name+"）";
-b.style.background=GROUPS[mt.g].color;
-b.style.color=textOn(GROUPS[mt.g].color);
+b.style.background=typeColor(code);
+b.style.color=textOn(typeColor(code));
 b.addEventListener("click", function(){ previewType(code);});
 matchEl.appendChild(b);
 });
@@ -1056,8 +1088,8 @@ var t=TYPES[code], g=GROUPS[t.g];
 // 図鑑・相性からの表示はモーダルで出す。診断結果や写真を上書きしないので、
 // 閉じれば前にいた画面（トップ／結果）へそのまま戻れる。
 lastFocusedBeforeModal=document.activeElement;
-$("modalHead").style.background=g.color;
-$("modalHead").style.color=textOn(g.color);
+$("modalHead").style.background=typeColor(code);
+$("modalHead").style.color=textOn(typeColor(code));
 $("modalGroup").textContent=g.label;
 $("modalCode").textContent=code;
 $("modalName").textContent=t.name+"タイプ";
@@ -1083,6 +1115,7 @@ document.addEventListener("keydown", function(e){ if(e.key==="Escape" && !$("typ
 /* 最初に戻る／やり直す（どの段階からでもトップへ戻れる共通処理） */
 function goHome(){
 stopCameraStream();
+finishAnimation=null;
 closeTypeModal();
 var sc=$("stageCamera"); if(sc) sc.classList.add("hidden");
 stageResult.classList.remove("show");
@@ -1091,14 +1124,12 @@ current.dataUrl=null; current.metrics=null; current.result=null; current.mission
 previewImg.removeAttribute("src");
 var pv=$("sharePreview"); if(pv){ pv.classList.add("hidden"); pv.removeAttribute("src"); }
 stageUpload.classList.remove("hidden");
+setMissionVisible(true);
 window.scrollTo({top:0, behavior:"smooth"});
 stageUpload.scrollIntoView({behavior:"smooth", block:"start"});
 }
-$("againBtn").addEventListener("click", goHome);
 $("againBtnTop").addEventListener("click", goHome);
 $("homeFromResultBtn").addEventListener("click", goHome);
-$("homeBtnTop2").addEventListener("click", goHome);
-$("homeBtnBottom").addEventListener("click", goHome);
 $("backFromPreviewBtn").addEventListener("click", goHome);
 $("copyBtn").addEventListener("click", function(){
 if(!current.result) return;
@@ -1122,8 +1153,8 @@ var m=current.metrics, t=TYPES[m.code], g=GROUPS[t.g];
 var c=document.createElement("canvas"); c.width=1080; c.height=1920;
 var x=c.getContext("2d");
 function draw(img){
-/* 背景＝グループカラー、内側にクリームのカード */
-x.fillStyle=g.color; x.fillRect(0,0,1080,1920);
+/* 背景＝そのタイプの色、内側にクリームのカード */
+x.fillStyle=typeColor(m.code); x.fillRect(0,0,1080,1920);
 x.fillStyle=cssVar("--paper", "#FFF8EE"); rr(x,48,48,984,1824,48); x.fill();
 /* 見出し */
 x.fillStyle=cssVar("--paper-ink", "#2B2118"); x.textAlign="center"; x.textBaseline="middle";
@@ -1137,8 +1168,8 @@ if(img && img.naturalWidth){
 var side=Math.min(img.naturalWidth, img.naturalHeight);
 x.drawImage(img, (img.naturalWidth-side)/2, (img.naturalHeight-side)/2, side, side, cx-rad, cy-rad, rad*2, rad*2);
 } else {
-x.fillStyle=g.color; x.fillRect(cx-rad,cy-rad,rad*2,rad*2);
-x.fillStyle=textOn(g.color); x.font="900 150px 'Zen Maru Gothic', sans-serif";
+x.fillStyle=typeColor(m.code); x.fillRect(cx-rad,cy-rad,rad*2,rad*2);
+x.fillStyle=textOn(typeColor(m.code)); x.font="900 150px 'Zen Maru Gothic', sans-serif";
 x.fillText(m.code[0], cx, cy+6);
 }
 x.restore();
@@ -1153,7 +1184,7 @@ x.fillText("ミッション達成！", 0, 2);
 x.restore();
 }
 /* タイプ情報 */
-x.fillStyle=g.color; x.font="800 36px 'M PLUS Rounded 1c', sans-serif";
+x.fillStyle=typeColor(m.code); x.font="800 36px 'M PLUS Rounded 1c', sans-serif";
 x.fillText(g.label, 540, 726);
 x.font="900 168px 'Zen Maru Gothic', sans-serif";
 x.fillText(m.code, 540, 838);
@@ -1184,7 +1215,9 @@ x.fillText((d[4]>=0.5? d[2]: d[3])+" "+win+"%", 540, y+96);
 });
 /* フッター */
 x.fillStyle=cssVar("--paper-ink", "#2B2118"); x.font="800 40px 'M PLUS Rounded 1c', sans-serif";
-x.fillText("#顔写真MBTI診断 #MBTI", 540, 1796);
+x.fillText("#顔写真MBTI診断 #MBTI", 540, 1768);
+x.fillStyle=cssVar("--paper-sub", "#6B5D4F"); x.font="700 32px 'M PLUS Rounded 1c', sans-serif";
+x.fillText("「顔写真MBTI診断」で検索して遊んでみてね", 540, 1824);
 shareCanvas=c;
 if(done) done(c);
 }
@@ -1230,8 +1263,8 @@ ORDER.forEach(function(code){
 var t=TYPES[code];
 var b=document.createElement("button");
 b.type="button"; b.className="type-cell";
-b.style.background=GROUPS[t.g].color;
-b.style.color=textOn(GROUPS[t.g].color);
+b.style.background=typeColor(code);
+b.style.color=textOn(typeColor(code));
 b.innerHTML='<span class="code">'+code+'</span><span class="nm">'+t.name+'</span>';
 b.setAttribute("aria-label", code+" "+t.name+"タイプの説明を見る");
 b.addEventListener("click", function(){ previewType(code);});
