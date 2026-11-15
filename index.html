@@ -46,13 +46,13 @@ button{font-family:inherit;cursor:pointer}
 h1{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:clamp(34px,8vw,56px);line-height:1.08;margin:16px 0 10px;letter-spacing:.01em}
 h1 .hl{color:var(--coral)}
 h1 .hl2{color:var(--highlight2)}
-.lead{color:var(--ink2);font-size:var(--fs-body);font-weight:700;max-width:560px;margin:0 auto}
+.lead{color:var(--ink2);font-size:17px;font-weight:700;max-width:560px;margin:0 auto;line-height:1.7}
 .lead b{color:var(--ink)}
 .hero-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
 .hero-tags span{font-size:var(--fs-note);font-weight:800;background:var(--card);border:1.5px solid var(--line);padding:7px 12px;border-radius:var(--r-pill)}
 /* UPLOAD */
 .stage{margin-top:26px}
-.drop{background:var(--card);border:2.5px dashed var(--drop-border);border-radius:var(--r-card);padding:28px 20px;text-align:center;box-shadow:var(--shadow);transition:border-color.2s, background.2s}
+.drop{background:var(--card);border:2.5px dashed var(--drop-border);border-radius:var(--r-card);padding:34px 20px;text-align:center;box-shadow:var(--shadow);transition:border-color.2s, background.2s}
 .drop.drag{border-color:var(--coral);background:var(--card2)}
 .face-illo{width:118px;height:118px;margin:2px auto 14px;position:relative}
 .face-illo .face{width:118px;height:118px;border-radius:50%;background:#FFE3B3;border:3px solid var(--ink);position:relative;overflow:hidden}
@@ -143,6 +143,12 @@ h1 .hl2{color:var(--highlight2)}
 .cam-frame{position:relative;width:min(340px,82vw);aspect-ratio:1;margin:0 auto;border-radius:var(--r-box);overflow:hidden;background:#111}
 .cam-frame video,.cam-frame img{width:100%;height:100%;object-fit:cover;display:block}
 .cam-frame video{transform:scaleX(-1)}
+.cam-frame video.rear{transform:none}
+.cam-chip{position:absolute;top:10px;left:10px;z-index:3;background:rgba(0,0,0,.55);color:#fff;font-size:var(--fs-note);font-weight:800;padding:5px 11px;border-radius:var(--r-pill);pointer-events:none}
+.cam-switch{position:absolute;top:8px;right:8px;z-index:3;display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.55);color:#fff;border:2px solid rgba(255,255,255,.65);border-radius:var(--r-pill);font-weight:800;font-size:var(--fs-note);padding:7px 13px;min-height:40px;backdrop-filter:blur(2px)}
+.cam-switch:active{transform:scale(.96)}
+.cam-switch:disabled{opacity:.45;cursor:not-allowed}
+.cam-switch svg{flex:none}
 .cam-guide{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center}
 .cam-guide i{width:62%;height:76%;border:3px dashed rgba(255,255,255,.85);border-radius:50%;display:block;box-shadow:0 0 0 999px rgba(0,0,0,.12)}
 .cam-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:var(--fs-sub);background:rgba(0,0,0,.45);text-align:center;padding:20px}
@@ -213,6 +219,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 .details-fold summary::after{content:"\25BE";color:var(--coral-d)}
 .details-fold[open] summary::after{content:"\25B4"}
 .details-fold .grid2{margin-top:14px}
+.how-fold .how{margin-top:14px;text-align:left;box-shadow:none}
 .hidden{display:none!important}
 /* REDO / BACK NAVIGATION */
 .stage-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
@@ -239,12 +246,9 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <div class="wrap">
 
 <header class="hero">
-<span class="badge"><i></i>エンタメ診断 ・ 結果はお遊びです</span>
+<span class="badge"><i></i>エンタメ診断</span>
 <h1>顔写真でわかる<br><span class="hl">MBTI</span><span class="hl2">診断</span></h1>
-<p class="lead">写真を選ぶか、その場でカメラで撮るだけ。顔の<b>明るさ・色合い・コントラスト・左右バランス</b>をその場で読み取って、16タイプの中から「顔の雰囲気にいちばん近いタイプ」をはじき出します。</p>
-<div class="hero-tags">
-<span>約10秒で結果が出る</span><span>写真は端末の外に出ません</span><span>日替わりミッション</span>
-</div>
+<p class="lead">顔写真から、雰囲気に近いタイプを診断します。</p>
 </header>
 
 <!-- STEP 1: UPLOAD -->
@@ -258,8 +262,8 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <span class="scan"></span>
 </div>
 </div>
-<h2>顔写真をここにドロップ</h2>
-<p>正面の顔がはっきり写っている写真がいちばん盛れます。<br>自撮り・証明写真・推しの写真でもOK。その場で撮ることもできます。</p>
+<h2>顔写真をえらんでね</h2>
+<p>正面の顔写真がおすすめです。</p>
 <div class="upload-actions">
 <button class="btn btn-primary" id="cameraBtn" type="button"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>カメラで撮る</button>
 <button class="btn btn-ghost" id="pickBtn" type="button">写真を選ぶ</button>
@@ -267,12 +271,12 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <input type="file" id="fileInput" accept="image/*" class="hidden" aria-label="顔写真を選ぶ">
 <input type="file" id="cameraFileInput" accept="image/*" capture="user" class="hidden" aria-label="カメラアプリで顔写真を撮る">
 <div class="sample-row">
-<p>写真を用意できない人は、サンプルの顔イラストでお試し診断</p>
+<p>サンプルで試す</p>
 <div class="samples" id="samples"></div>
 </div>
 <p class="privacy">
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-<span>写真はあなたの端末の中だけで解析されます。サーバーへの送信・保存は一切しません。診断結果は科学的な性格判定ではなく、顔の画像データから作るエンタメです。</span>
+<span>写真は端末の中だけで処理します。外部には送りません。</span>
 </p>
 </div>
 </section>
@@ -288,10 +292,12 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <section class="stage hidden" id="stageCamera">
 <div class="preview-card camera-card" id="cameraCard">
 <h2>カメラで撮影</h2>
-<p class="cam-lead">ガイドの丸に顔を合わせて、明るい場所で正面から撮ると読み取りやすくなります。<br>プレビューは鏡のように左右反転して表示されます（撮影画像もそのままの見た目で保存されます）。</p>
+<p class="cam-lead">丸に顔を合わせて、明るい場所で撮ってね。</p>
 <div class="cam-frame" id="camFrame">
 <video id="cameraVideo" autoplay playsinline muted aria-label="カメラのライブプレビュー"></video>
 <img id="cameraShot" class="hidden" alt="撮影した顔写真の確認用プレビュー">
+<span class="cam-chip" id="camChip">インカメ</span>
+<button class="cam-switch" id="flipCameraBtn" type="button" aria-label="インカメラと外カメラを切り替える"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2.5 21 6.5l-4 4"/><path d="M3 12.5v-1a5 5 0 0 1 5-5h13"/><path d="M7 21.5 3 17.5l4-4"/><path d="M21 11.5v1a5 5 0 0 1-5 5H3"/></svg><span id="flipCameraLabel">外カメに切替</span></button>
 <div class="cam-guide" id="camGuide" aria-hidden="true"><i></i></div>
 <div class="cam-loading" id="camLoading">カメラを起動しています…</div>
 </div>
@@ -299,7 +305,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <div class="cam-status sub" id="cameraSub">許可を求める画面が出たら「許可」を選んでください</div>
 <div class="cam-error hidden" id="cameraError">
 <h3>カメラを開けませんでした</h3>
-<p id="cameraErrorText">カメラが使えない環境のようです。代わりに、端末のカメラアプリで撮った写真や、手持ちの写真ファイルから診断できます。</p>
+<p id="cameraErrorText">写真ファイルから診断できます。</p>
 <div class="actions">
 <button class="btn btn-primary" id="fallbackCaptureBtn" type="button">カメラアプリで撮る</button>
 <button class="btn btn-ghost" id="fallbackFileBtn" type="button">写真を選ぶ</button>
@@ -315,7 +321,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 </div>
 <p class="privacy">
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-<span>カメラ映像・撮影した写真はあなたの端末の中だけで処理されます。外部への送信・保存は一切しません。撮影が終わったらカメラは自動で止まります。</span>
+<span>映像は端末の中だけで処理します。</span>
 </p>
 </div>
 </section>
@@ -334,7 +340,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 </div>
 <div class="status">
 <div class="step" id="statusStep">この写真で診断します</div>
-<div class="sub" id="statusSub">顔が写っていることを確認したら、診断スタート！</div>
+<div class="sub" id="statusSub">よければ「診断スタート」を押してね</div>
 <div class="bar hidden" id="progressWrap"><i id="progressBar"></i></div>
 <div class="metrics hidden" id="metrics"></div>
 </div>
@@ -373,7 +379,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <div class="dims" id="dims"></div>
 <div class="share-box">
 <h3>シェア画像カード</h3>
-<p>写真・タイプ・キャッチコピー・4軸バーを1枚にまとめた、ストーリーズ向けの縦長画像（9:16）です</p>
+<p>結果を1枚の縦長画像にまとめます</p>
 <img id="sharePreview" class="hidden" alt="シェア用画像カードのプレビュー">
 <div class="actions">
 <button class="btn btn-primary" id="cardBtn" type="button">シェア画像を保存</button>
@@ -381,7 +387,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 </div>
 </div>
 <details class="details-fold" id="resultDetails">
-<summary>くわしく見る（強み・注意点・恋愛・仕事・相性・顔データ）</summary>
+<summary>くわしく見る</summary>
 <div class="grid2">
 <div class="mini"><h3>キーワード</h3><div class="tags" id="resultTags"></div></div>
 <div class="mini"><h3>強み</h3><p id="resultStrong"></p></div>
@@ -406,27 +412,27 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <!-- 16 TYPES -->
 <section class="section">
 <h2>16タイプ図鑑</h2>
-<p class="sub">気になるタイプをタップすると、そのタイプの説明が見られます</p>
+<p class="sub">タップで説明が見られます</p>
 <div class="type-grid" id="typeGrid"></div>
 </section>
 
 <!-- HOW -->
 <section class="section">
-<h2>診断のしくみ</h2>
-<p class="sub">中身は意外とマジメに画像を読んでいます</p>
+<details class="details-fold how-fold">
+<summary>診断のしくみ</summary>
 <div class="how">
 <ol>
-<li>写真を小さなグリッドに縮小し、ピクセル単位で明るさ・暖色度・色の鮮やかさ・コントラストを測ります。</li>
-<li>左半分と右半分を比べて「左右バランス」、細部の情報量から「ディテール感」を数値化します。</li>
-<li>その数値を E/I・S/N・T/F・J/P の4軸に変換し、16タイプから最も近いものを選びます。同じ写真なら毎回同じ結果になります。</li>
+<li>写真の明るさ・色合い・コントラストを測ります。</li>
+<li>左右バランスと細部の情報量も数値化します。</li>
+<li>4つの軸（E/I・S/N・T/F・J/P）から、近いタイプを選びます。</li>
 </ol>
-<p>※ 本アプリはエンターテインメントです。顔から性格を科学的に判定できるものではありません。「雰囲気が近いタイプ」として、友達との話題作りにお楽しみください。本来のMBTIは質問紙による自己理解のツールです。</p>
+<p>※ エンタメ診断です。顔から性格を判定するものではありません。</p>
 </div>
+</details>
 </section>
 
 <footer>
-顔写真MBTI診断 — 写真は端末内でのみ処理され、外部に送信されません。<br>
-結果はエンタメとしてお楽しみください。
+写真は端末内でのみ処理されます
 </footer>
 </div>
 
@@ -554,14 +560,14 @@ toastTimer=setTimeout(function(){ toast.classList.remove("show");},2400);
 /* ---------- ミッションカード表示 ---------- */
 (function(){
 var wd=["日","月","火","水","木","金","土"][MISSION.date.getDay()];
-$("missionDate").textContent=(MISSION.date.getMonth()+1)+"月"+MISSION.date.getDate()+"日（"+wd+"）・日替わりでお題が変わります";
+$("missionDate").textContent=(MISSION.date.getMonth()+1)+"月"+MISSION.date.getDate()+"日（"+wd+"）";
 $("missionExpr").textContent=MISSION.expr;
 var targetEl=$("missionTarget");
 var mt=TYPES[MISSION.code];
 targetEl.textContent=MISSION.code+"（"+mt.name+"）";
 targetEl.style.background=GROUPS[mt.g].color;
 targetEl.style.color=textOn(GROUPS[mt.g].color);
-$("missionHint").innerHTML="狙い方："+MISSION.hint+"<br>診断結果が目標タイプと一致すると、結果画面で<b>達成演出</b>が出ます。違っても「あと少し」のヒントがもらえます。";
+$("missionHint").textContent=MISSION.hint;
 })();
 
 /* ---------- サンプルの顔イラスト ---------- */
@@ -639,7 +645,7 @@ previewCard.classList.remove("analyzing");
 progressWrap.classList.add("hidden"); metricsEl.classList.add("hidden");
 previewActions.classList.remove("hidden");
 statusStep.textContent="この写真で診断します";
-statusSub.textContent="顔が写っていることを確認したら、診断スタート！";
+statusSub.textContent="よければ「診断スタート」を押してね";
 stagePreview.scrollIntoView({behavior:"smooth", block:"start"});
 }
 $("changeBtn").addEventListener("click", function(){
@@ -652,6 +658,15 @@ stageUpload.scrollIntoView({behavior:"smooth"});
 /* ---------- カメラ撮影 ---------- */
 var cameraStream=null;
 var capturedDataUrl=null;
+var currentFacing="user"; /* "user"=インカメ（自分撮り） / "environment"=外カメ */
+var flipping=false;
+function updateFacingUi(){
+var isFront=currentFacing==="user";
+var v=$("cameraVideo");
+v.classList.toggle("rear", !isFront);
+$("camChip").textContent=isFront?"インカメ":"外カメ";
+$("flipCameraLabel").textContent=isFront?"外カメに切替":"インカメに切替";
+}
 function stopCameraStream(){
 if(cameraStream){
 cameraStream.getTracks().forEach(function(tr){ try{ tr.stop(); }catch(e){} });
@@ -665,6 +680,8 @@ capturedDataUrl=null;
 $("cameraShot").classList.add("hidden");
 $("cameraShot").removeAttribute("src");
 $("cameraVideo").classList.remove("hidden");
+$("flipCameraBtn").classList.remove("hidden");
+$("camChip").classList.remove("hidden");
 $("camGuide").classList.remove("hidden");
 $("camLoading").classList.remove("hidden");
 $("camLoading").textContent="カメラを起動しています…";
@@ -672,12 +689,16 @@ $("cameraError").classList.add("hidden");
 $("cameraLiveActions").classList.remove("hidden");
 $("cameraReviewActions").classList.add("hidden");
 $("shutterBtn").disabled=true;
+$("flipCameraBtn").disabled=false;
+updateFacingUi();
 $("cameraStatus").textContent="カメラを起動しています";
 $("cameraSub").textContent="許可を求める画面が出たら「許可」を選んでください";
 }
 function showCameraError(text){
 stopCameraStream();
 $("camLoading").classList.add("hidden");
+$("flipCameraBtn").classList.add("hidden");
+$("camChip").classList.add("hidden");
 $("cameraLiveActions").classList.add("hidden");
 $("cameraReviewActions").classList.add("hidden");
 if(text) $("cameraErrorText").textContent=text;
@@ -685,23 +706,25 @@ $("cameraError").classList.remove("hidden");
 $("cameraStatus").textContent="カメラを開けませんでした";
 $("cameraSub").textContent="下のボタンから、撮った写真や手持ちの写真で診断できます";
 }
-function startCamera(){
+function startCamera(opts){
+opts=opts||{};
 var stageCamera=$("stageCamera");
 stageUpload.classList.add("hidden");
 stageResult.classList.remove("show");
 stagePreview.classList.add("hidden");
 stageCamera.classList.remove("hidden");
 cameraUiReset();
-stageCamera.scrollIntoView({behavior:"smooth", block:"start"});
+if(!opts.flip) stageCamera.scrollIntoView({behavior:"smooth", block:"start"});
 if(!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia!=="function"){
-showCameraError("このブラウザ／環境ではカメラのライブ撮影に対応していないようです。代わりに、端末のカメラアプリで撮った写真や、手持ちの写真ファイルから診断できます。");
+showCameraError("この環境ではカメラ撮影に対応していません。写真ファイルから診断できます。");
 return;
 }
-navigator.mediaDevices.getUserMedia({ video:{ facingMode:"user", width:{ideal:1280}, height:{ideal:1280} }, audio:false })
+navigator.mediaDevices.getUserMedia({ video:{ facingMode:currentFacing, width:{ideal:1280}, height:{ideal:1280} }, audio:false })
 .then(function(stream){
 /* 途中でキャンセルされていたら即停止 */
 if(stageCamera.classList.contains("hidden")){ stream.getTracks().forEach(function(tr){ tr.stop(); }); return; }
 cameraStream=stream;
+flipping=false;
 var v=$("cameraVideo");
 v.srcObject=stream;
 var p=v.play(); if(p && p.catch) p.catch(function(){});
@@ -709,21 +732,41 @@ v.onloadedmetadata=function(){
 $("camLoading").classList.add("hidden");
 $("shutterBtn").disabled=false;
 $("cameraStatus").textContent="顔をガイドに合わせて、シャッターを押してね";
-$("cameraSub").textContent="明るい場所で、正面から撮ると読み取りやすくなります";
+$("cameraSub").textContent=(currentFacing==="user"?"インカメ":"外カメ")+"で撮影中です";
 };
 })
 .catch(function(err){
+flipping=false;
 var name=err && err.name ? err.name : "";
+/* 切替先のカメラが無い端末では、元のカメラに戻す */
+if(opts.flip && (name==="NotFoundError" || name==="OverconstrainedError") && !opts.retried){
+showToast((currentFacing==="user"?"インカメ":"外カメ")+"が見つかりませんでした");
+currentFacing=opts.prevFacing;
+updateFacingUi();
+startCamera({flip:true, retried:true, prevFacing:opts.prevFacing});
+return;
+}
 if(name==="NotAllowedError" || name==="SecurityError"){
-showCameraError("カメラの許可が得られませんでした。ブラウザの設定でカメラを許可するか、代わりにカメラアプリで撮った写真や手持ちの写真ファイルから診断してください。");
+showCameraError("カメラの許可が得られませんでした。ブラウザの設定で許可するか、写真ファイルから診断してください。");
 } else if(name==="NotFoundError" || name==="OverconstrainedError"){
-showCameraError("使えるカメラが見つかりませんでした。代わりに、端末のカメラアプリで撮った写真や、手持ちの写真ファイルから診断できます。");
+showCameraError("使えるカメラが見つかりませんでした。写真ファイルから診断できます。");
 } else if(name==="NotReadableError"){
-showCameraError("カメラが他のアプリで使用中かもしれません。少し待ってからもう一度試すか、代わりに写真ファイルから診断してください。");
+showCameraError("カメラが他のアプリで使用中かもしれません。少し待ってから試すか、写真ファイルから診断してください。");
 } else {
-showCameraError("カメラを開けませんでした。代わりに、端末のカメラアプリで撮った写真や、手持ちの写真ファイルから診断できます。");
+showCameraError("カメラを開けませんでした。写真ファイルから診断できます。");
 }
 });
+}
+function flipCamera(){
+if(flipping || capturedDataUrl) return;
+if(!$("camLoading").classList.contains("hidden")) return;
+if($("cameraError").classList.contains("hidden")===false) return;
+flipping=true;
+var prev=currentFacing;
+currentFacing = currentFacing==="user" ? "environment" : "user";
+updateFacingUi();
+stopCameraStream();
+startCamera({flip:true, prevFacing:prev});
 }
 function closeCameraToUpload(){
 stopCameraStream();
@@ -739,8 +782,8 @@ var out=Math.min(side, 1080);
 var sx=(v.videoWidth-side)/2, sy=(v.videoHeight-side)/2;
 var c=document.createElement("canvas"); c.width=out; c.height=out;
 var g=c.getContext("2d");
-/* プレビュー（鏡像）と同じ見た目で保存する */
-g.translate(out,0); g.scale(-1,1);
+/* インカメはプレビュー（鏡像）と同じ見た目で保存する。外カメはそのまま */
+if(currentFacing==="user"){ g.translate(out,0); g.scale(-1,1); }
 g.drawImage(v, sx, sy, side, side, 0, 0, out, out);
 capturedDataUrl=c.toDataURL("image/jpeg", 0.92);
 stopCameraStream();
@@ -750,12 +793,15 @@ shot.classList.remove("hidden");
 v.classList.add("hidden");
 $("camGuide").classList.add("hidden");
 $("camLoading").classList.add("hidden");
+$("flipCameraBtn").classList.add("hidden");
+$("camChip").classList.add("hidden");
 $("cameraLiveActions").classList.add("hidden");
 $("cameraReviewActions").classList.remove("hidden");
 $("cameraStatus").textContent="この写真で診断しますか？";
-$("cameraSub").textContent="顔がはっきり写っていたら「これで診断」、撮り直したいときは「撮り直し」を押してね";
+$("cameraSub").textContent="よければ「これで診断」を押してね";
 }
-$("cameraBtn").addEventListener("click", startCamera);
+$("cameraBtn").addEventListener("click", function(){ startCamera(); });
+$("flipCameraBtn").addEventListener("click", flipCamera);
 $("cameraCancelBtn").addEventListener("click", closeCameraToUpload);
 $("shutterBtn").addEventListener("click", capturePhoto);
 $("retakeBtn").addEventListener("click", startCamera);
@@ -980,15 +1026,15 @@ box.classList.remove("hidden","achieved");
 if(code===target){
 current.missionAchieved=true;
 box.classList.add("achieved");
-$("missionResultTitle").textContent="ミッション達成！ すごい！";
-$("missionResultText").textContent="今日のお題「"+MISSION.expr+"」で、目標の "+target+"（"+mt.name+"）にドンピシャ！ その表情、今日いちばんの出来です。この調子でシェアカードも保存してみて。";
+$("missionResultTitle").textContent="ミッション達成！";
+$("missionResultText").textContent="目標の "+target+"（"+mt.name+"）にぴったり一致しました！";
 spawnConfetti();
 } else {
 var advices=diffs.map(function(i){ return AXIS_ADVICE[i](target[i]); });
 $("missionResultTitle").textContent = matchCount>=3
 ? "あと少し！ 目標まで残り1文字"
 : "今回は "+code+" でした（4文字中"+matchCount+"文字一致）";
-$("missionResultText").textContent="目標は "+target+"（"+mt.name+"）。"+advices.join("／")+"。お題は「"+MISSION.expr+"」です。表情を変えて、もう1枚試してみて！";
+$("missionResultText").textContent="目標は "+target+"（"+mt.name+"）。"+advices.join("／");
 }
 }
 function spawnConfetti(){
