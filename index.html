@@ -214,6 +214,25 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 .details-fold[open] summary::after{content:"\25B4"}
 .details-fold .grid2{margin-top:14px}
 .hidden{display:none!important}
+/* REDO / BACK NAVIGATION */
+.stage-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.stage-nav .btn{min-height:40px;padding:9px 16px;font-size:var(--fs-sub)}
+.result-top-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:16px 22px 0}
+.result-top-actions .btn-primary{flex:1 1 220px;max-width:340px}
+/* TYPE DETAIL MODAL */
+.modal{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;padding:0}
+@media (min-width:640px){.modal{align-items:center;padding:24px}}
+.modal-backdrop{position:absolute;inset:0;background:rgba(30,20,10,.55)}
+.modal-card{position:relative;background:var(--card);color:var(--ink);width:100%;max-width:520px;max-height:88vh;overflow:auto;border-radius:24px 24px 0 0;box-shadow:var(--shadow);border:1.5px solid var(--line)}
+@media (min-width:640px){.modal-card{border-radius:24px}}
+.modal-head{padding:22px 22px 16px;text-align:center;color:#fff;position:relative}
+.modal-head .group{font-size:var(--fs-note);font-weight:800;letter-spacing:.14em;opacity:.92}
+.modal-head .code{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:52px;line-height:1.05}
+.modal-head .nm{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:21px}
+.modal-head .catch{font-size:var(--fs-sub);font-weight:700;opacity:.95}
+.modal-body{padding:18px 22px 22px}
+.modal-body .desc{margin-bottom:14px}
+.modal-close{position:absolute;top:12px;right:12px;width:40px;height:40px;min-height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.92);color:#2B2118;font-size:20px;font-weight:900;line-height:1;display:inline-flex;align-items:center;justify-content:center}
 </style>
 </head>
 <body>
@@ -303,6 +322,10 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 
 <!-- STEP 2: PREVIEW / ANALYZING -->
 <section class="stage hidden" id="stagePreview">
+<div class="stage-nav">
+<button class="btn btn-ghost" id="backFromPreviewBtn" type="button">← 最初に戻る</button>
+<span style="font-size:var(--fs-note);font-weight:800;color:var(--ink2)">写真の確認</span>
+</div>
 <div class="preview-card" id="previewCard">
 <div class="photo-frame">
 <img id="previewImg" alt="診断に使う顔写真のプレビュー">
@@ -324,6 +347,10 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 
 <!-- STEP 3: RESULT -->
 <section class="stage result" id="stageResult" aria-live="polite">
+<div class="stage-nav">
+<button class="btn btn-ghost" id="homeFromResultBtn" type="button">← 最初に戻る</button>
+<span style="font-size:var(--fs-note);font-weight:800;color:var(--ink2)">診断結果</span>
+</div>
 <div class="result-card">
 <div class="result-head" id="resultHead">
 <div class="confetti" id="confetti" aria-hidden="true"></div>
@@ -333,10 +360,11 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <div class="type-name" id="resultName"></div>
 <div class="type-catch" id="resultCatch"></div>
 </div>
-<div class="result-body">
-<div class="actions" style="margin-top:0">
-<button class="btn btn-primary" id="againBtnTop" type="button">もう一度診断する</button>
+<div class="result-top-actions">
+<button class="btn btn-primary" id="againBtnTop" type="button">別の写真でもう一度診断</button>
+<button class="btn btn-ghost" id="homeBtnTop2" type="button">トップに戻る</button>
 </div>
+<div class="result-body">
 <div class="mission-result hidden" id="missionResult">
 <p class="mr-title" id="missionResultTitle"></p>
 <p class="mr-text" id="missionResultText"></p>
@@ -368,7 +396,8 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 </div>
 </details>
 <div class="actions">
-<button class="btn btn-ghost" id="againBtn" type="button">別の写真で診断</button>
+<button class="btn btn-primary" id="againBtn" type="button">別の写真でもう一度診断</button>
+<button class="btn btn-ghost" id="homeBtnBottom" type="button">トップに戻る</button>
 </div>
 </div>
 </div>
@@ -399,6 +428,33 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 顔写真MBTI診断 — 写真は端末内でのみ処理され、外部に送信されません。<br>
 結果はエンタメとしてお楽しみください。
 </footer>
+</div>
+
+<!-- TYPE DETAIL MODAL -->
+<div class="modal hidden" id="typeModal" role="dialog" aria-modal="true" aria-labelledby="modalCode">
+<div class="modal-backdrop" id="typeModalBackdrop"></div>
+<div class="modal-card">
+<div class="modal-head" id="modalHead">
+<button class="modal-close" id="typeModalClose" type="button" aria-label="閉じて前にいた画面に戻る">×</button>
+<div class="group" id="modalGroup"></div>
+<div class="code" id="modalCode"></div>
+<div class="nm" id="modalName"></div>
+<div class="catch" id="modalCatch"></div>
+</div>
+<div class="modal-body">
+<p class="desc" id="modalDesc"></p>
+<div class="grid2">
+<div class="mini"><h3>キーワード</h3><div class="tags" id="modalTags"></div></div>
+<div class="mini"><h3>強み</h3><p id="modalStrong"></p></div>
+<div class="mini"><h3>ちょっと注意</h3><p id="modalWeak"></p></div>
+<div class="mini"><h3>恋愛スタイル</h3><p id="modalLove"></p></div>
+<div class="mini"><h3>仕事スタイル</h3><p id="modalWork"></p></div>
+</div>
+<div class="actions">
+<button class="btn btn-primary" id="typeModalBackBtn" type="button">閉じて戻る</button>
+</div>
+</div>
+</div>
 </div>
 
 <div class="toast" id="toast" role="status"></div>
@@ -759,32 +815,41 @@ if(y<S-1){ edgeSum+=Math.abs(lum-lumArr[idx+S]); edgeCount++;}
 var contrast=Math.sqrt(variance/n); // 0-約110
 var saturation=satSum/n; // 0-1
 var edge=edgeSum/edgeCount; // ディテール量
-// 左右対称性：左半分と右半分（反転）の明るさ差
+// 左右対称性：背景の明暗に引っ張られないよう、顔がある中央エリアだけで
+// 左半分と右半分（反転）の明るさ差を測る
 var diff=0, cnt=0;
-for(var yy=0; yy<S; yy++) for(var xx=0; xx<S/2; xx++){
+for(var yy=8; yy<S-8; yy++) for(var xx=14; xx<S/2; xx++){
 diff+=Math.abs(lumArr[yy*S+xx]-lumArr[yy*S+(S-1-xx)]); cnt++;
 }
 var asymmetry=diff/cnt; // 小さいほど対称
 var warmth=(meanR-meanB); // 暖色度 -255..255
 var hash=0;
-for(var k=0;k<n;k+=37){ hash=(hash*31 + d[k*4])>>>0;}
+for(var k=0;k<n;k+=13){ hash=(hash*31 + d[k*4]*3 + d[k*4+1]*5 + d[k*4+2]*7)>>>0;}
 var jitter=((hash%13)-6)/100; // 同じ写真では固定の微調整 ±0.06
 
 function clamp01(v){ return Math.max(0.02, Math.min(0.98, v));}
 // 4軸スコア：0.5が境界、E/S/T/J寄りが >0.5
-// 2026-11-15 再調整：旧式は実写の平均像（明るめ・72px縮小でディテール低下・背景込みで左右差大）で
-// ほぼ ESTP（起業家）に固定されていた。各指標を「実写で実際に取りうる中心」に置き直し、両側へ振れるようにした。
-var ei = clamp01(0.5 + (meanLum-125)/130 + (saturation-0.30)*0.55 + jitter); // 明るく鮮やか→E
-var sn = clamp01(0.5 + (edge-9)/10*0.5 - (saturation-0.30)*0.30 + jitter*0.7); // ディテール多い→S、少ない→N
-var tf = clamp01(0.5 + (contrast-52)/58*0.5 - (warmth-22)/55*0.38 + jitter*0.7); // メリハリ強く寒色→T、柔らかく暖色→F
-var jp = clamp01(0.5 + (17-asymmetry)/15*0.5 + (contrast-52)/58*0.18 + jitter*0.7); // 対称で整っている→J、ラフ→P
+// 以前の式は切片が大きく、普通の自撮り（明るめ・コントラスト強め・暖色寄り）だと
+// 全軸が同じ側に寄って ESTP に固定されやすかった。
+// 各指標を「普通の写真でだいたい真ん中（0.5）」になるよう中心化し、
+// 明るさ・鮮やかさ・コントラスト・暖色度・対称性・ディテールの
+// それぞれが別々の軸を動かすように組み直した。
+var brightNorm=meanLum/255;
+var contrastNorm=Math.min(1, contrast/110);
+var detailNorm=Math.min(1, edge/32);
+var symmetryNorm=Math.max(0, 1-Math.min(1, asymmetry/38));
+var warmthNorm=Math.max(0, Math.min(1, (warmth+80)/160));
+var ei = clamp01(0.50 + (brightNorm-0.58)*1.10 + (saturation-0.32)*0.90 + jitter*1.2);
+var sn = clamp01(0.50 + (detailNorm-0.42)*0.90 + (contrastNorm-0.52)*0.35 - (saturation-0.32)*0.45 + jitter*0.8); // ディテール多い→S寄り（sn大=S）
+var tf = clamp01(0.50 + (contrastNorm-0.52)*0.85 - (warmthNorm-0.55)*0.60 + (detailNorm-0.42)*0.25 + jitter*0.8); // tf大=T
+var jp = clamp01(0.50 + (symmetryNorm-0.45)*0.85 + (contrastNorm-0.52)*0.30 - (detailNorm-0.42)*0.35 + jitter*0.8); // jp大=J
 
 var code=(ei>=0.5?"E":"I")+(sn>=0.5?"S":"N")+(tf>=0.5?"T":"F")+(jp>=0.5?"J":"P");
 return {
 code:code, ei:ei, sn:sn, tf:tf, jp:jp,
 raw:{ brightness:Math.round(meanLum/255*100), warmth:Math.round(((warmth+80)/160)*100),
 saturation:Math.round(saturation*100), contrast:Math.round(contrast/110*100),
-symmetry:Math.max(0,Math.round(100-asymmetry/45*100)), detail:Math.min(100,Math.round(edge/38*100))}
+symmetry:Math.max(0,Math.round(100-asymmetry/45*100)), detail:Math.min(100,Math.round(edge/32*100))}
 };
 }
 
@@ -825,6 +890,7 @@ statusStep.textContent=STEPS[0][0]; statusSub.textContent=STEPS[0][1];
 progressBar.style.width="4%";
 var total=3400, started=Date.now();
 var timer=setInterval(function(){
+if(stagePreview.classList.contains("hidden")){ clearInterval(timer); running=false; return; }
 var p=Math.min(1,(Date.now()-started)/total);
 progressBar.style.width=Math.round(4+p*96)+"%";
 var want=Math.floor(p*STEPS.length);
@@ -938,36 +1004,56 @@ p.style.transform="rotate("+(Math.random()*180)+"deg)";
 wrap.appendChild(p);
 }
 }
+var lastFocusedBeforeModal=null;
 function previewType(code){
 var t=TYPES[code], g=GROUPS[t.g];
-// 図鑑からの簡易表示：結果カードを流用せず、トーストではなく専用に結果エリアへ仮表示
-current.metrics = current.metrics || { code:code, ei:code[0]==="E"?0.75:0.25, sn:code[1]==="S"?0.75:0.25, tf:code[2]==="T"?0.75:0.25, jp:code[3]==="J"?0.75:0.25, raw:{brightness:50,saturation:50,contrast:50,symmetry:50,detail:50}};
-var keepPhoto = current.dataUrl;
-current.metrics.code=code;
-if(!keepPhoto){
-var c=document.createElement("canvas"); c.width=200; c.height=200;
-var gg=c.getContext("2d"); gg.fillStyle=g.color; gg.fillRect(0,0,200,200);
-gg.fillStyle=textOn(g.color); gg.font="900 84px sans-serif"; gg.textAlign="center"; gg.textBaseline="middle";
-gg.fillText(code[0],100,104);
-current.dataUrl=c.toDataURL("image/png");
+// 図鑑・相性からの表示はモーダルで出す。診断結果や写真を上書きしないので、
+// 閉じれば前にいた画面（トップ／結果）へそのまま戻れる。
+lastFocusedBeforeModal=document.activeElement;
+$("modalHead").style.background=g.color;
+$("modalHead").style.color=textOn(g.color);
+$("modalGroup").textContent=g.label;
+$("modalCode").textContent=code;
+$("modalName").textContent=t.name+"タイプ";
+$("modalCatch").textContent="― "+t.catch+" ―";
+$("modalDesc").textContent=t.desc;
+$("modalTags").innerHTML=t.tags.map(function(x){ return "<span>#"+x+"</span>";}).join("");
+$("modalStrong").textContent=t.strong;
+$("modalWeak").textContent=t.weak;
+$("modalLove").textContent=t.love;
+$("modalWork").textContent=t.work;
+$("typeModal").classList.remove("hidden");
+var cb=$("typeModalClose"); if(cb) cb.focus();
 }
-showResult(false);
-if(!keepPhoto){ statusNote();}
+function closeTypeModal(){
+$("typeModal").classList.add("hidden");
+if(lastFocusedBeforeModal && lastFocusedBeforeModal.focus) lastFocusedBeforeModal.focus();
 }
-function statusNote(){ showToast("図鑑からの表示です。写真で診断すると顔データも出ます");}
+$("typeModalClose").addEventListener("click", closeTypeModal);
+$("typeModalBackBtn").addEventListener("click", closeTypeModal);
+$("typeModalBackdrop").addEventListener("click", closeTypeModal);
+document.addEventListener("keydown", function(e){ if(e.key==="Escape" && !$("typeModal").classList.contains("hidden")) closeTypeModal(); });
 
-function resetToUpload(){
+/* 最初に戻る／やり直す（どの段階からでもトップへ戻れる共通処理） */
+function goHome(){
 stopCameraStream();
+closeTypeModal();
+var sc=$("stageCamera"); if(sc) sc.classList.add("hidden");
 stageResult.classList.remove("show");
 stagePreview.classList.add("hidden");
-current.dataUrl=null; current.metrics=null; current.result=null;
-var fi=$("fileInput"); if(fi) fi.value="";
-var ci=$("cameraFileInput"); if(ci) ci.value="";
+current.dataUrl=null; current.metrics=null; current.result=null; current.missionAchieved=false; shareCanvas=null; capturedDataUrl=null;
+previewImg.removeAttribute("src");
+var pv=$("sharePreview"); if(pv){ pv.classList.add("hidden"); pv.removeAttribute("src"); }
 stageUpload.classList.remove("hidden");
-stageUpload.scrollIntoView({behavior:"smooth"});
+window.scrollTo({top:0, behavior:"smooth"});
+stageUpload.scrollIntoView({behavior:"smooth", block:"start"});
 }
-$("againBtn").addEventListener("click", resetToUpload);
-$("againBtnTop").addEventListener("click", resetToUpload);
+$("againBtn").addEventListener("click", goHome);
+$("againBtnTop").addEventListener("click", goHome);
+$("homeFromResultBtn").addEventListener("click", goHome);
+$("homeBtnTop2").addEventListener("click", goHome);
+$("homeBtnBottom").addEventListener("click", goHome);
+$("backFromPreviewBtn").addEventListener("click", goHome);
 $("copyBtn").addEventListener("click", function(){
 if(!current.result) return;
 var t=TYPES[current.result];
