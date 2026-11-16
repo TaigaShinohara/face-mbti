@@ -174,6 +174,10 @@ h1 .hl2{color:var(--ink)}
 .mission-target{display:inline-block;color:#fff;border-radius:var(--r-pill);padding:1px 10px;margin:0 2px;vertical-align:baseline}
 .mission-hint{margin:0;font-size:var(--fs-sub);font-weight:700;color:var(--ink2)}
 .mission-hint b{color:var(--ink)}
+.mission-reset{display:inline-flex;align-items:center;gap:6px;margin-left:auto;background:var(--card2);border:1.5px solid var(--line);color:var(--ink);border-radius:var(--r-pill);padding:6px 13px;font-size:var(--fs-note);font-weight:800;min-height:36px;transition:transform.12s, border-color.2s}
+.mission-reset:active{transform:scale(.96)}
+.mission-reset:hover{border-color:var(--coral);color:var(--coral-d)}
+.mission-reset svg{flex:none}
 .mission-result{border-radius:var(--r-box);padding:16px 18px;margin-bottom:18px;border:2px solid var(--line);background:var(--card2)}
 .mission-result .mr-title{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-subtitle);margin:0 0 4px}
 .mission-result .mr-text{margin:0;font-size:var(--fs-sub);font-weight:700}
@@ -194,11 +198,17 @@ h1 .hl2{color:var(--ink)}
 .section h2{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-h2-lg);margin:0 0 4px;text-align:center}
 .section .sub{text-align:center;color:var(--ink2);font-weight:700;font-size:var(--fs-sub);margin:0 0 18px}
 .type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-@media (max-width:640px){.type-grid{grid-template-columns:repeat(2,1fr)}}
-.type-cell{border:none;border-radius:var(--r-box);padding:14px 10px 12px;color:#fff;text-align:center;min-height:92px;display:flex;flex-direction:column;justify-content:center;gap:2px;transition:transform.12s}
+@media (max-width:640px){.type-grid{gap:6px}.type-cell{padding:8px 2px 8px;min-height:86px;border-radius:12px}.type-cell .code{font-size:15px;letter-spacing:.01em}.type-cell .nm{font-size:10.5px;line-height:1.3}.type-face{width:40px;height:40px;margin-bottom:2px}}
+.type-cell{border:none;border-radius:var(--r-box);padding:10px 6px 10px;color:#fff;text-align:center;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform.12s}
 .type-cell:active{transform:scale(.96)}
-.type-cell .code{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-h2);letter-spacing:.03em}
+.type-cell .code{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-h2);letter-spacing:.03em;line-height:1.1}
 .type-cell .nm{font-size:var(--fs-note);font-weight:800;opacity:.95}
+.type-face{display:block;width:56px;height:56px;flex:none;margin-bottom:4px}
+.type-face svg{width:100%;height:100%;display:block}
+.modal-face{width:168px;height:168px;margin:2px auto 10px;background:rgba(255,255,255,.92);border-radius:50%;padding:10px;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.modal-face svg{width:100%;height:100%;display:block}
+.result-face{width:92px;height:92px;margin:8px auto 2px;background:rgba(255,255,255,.92);border-radius:50%;padding:6px}
+.result-face svg{width:100%;height:100%;display:block}
 .how{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-card);padding:20px;box-shadow:var(--shadow)}
 .how ol{margin:0;padding-left:20px;display:grid;gap:8px;font-size:var(--fs-sub);font-weight:700}
 .how p{font-size:var(--fs-sub);color:var(--ink2);font-weight:700;margin:12px 0 0}
@@ -282,9 +292,9 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 </div>
 </section>
 
-<!-- DAILY MISSION -->
-<section class="mission" id="missionCard" aria-label="今日の表情ミッション">
-<div class="mission-head"><span class="mission-badge">今日の表情ミッション</span><span id="missionDate"></span></div>
+<!-- MISSION -->
+<section class="mission" id="missionCard" aria-label="表情ミッション">
+<div class="mission-head"><span class="mission-badge">表情ミッション</span><button class="mission-reset" id="missionResetBtn" type="button" aria-label="ミッションのお題を別のものに変える"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>お題を変える</button></div>
 <div class="mission-main"><span class="mission-expr" id="missionExpr"></span>で <span class="mission-target" id="missionTarget"></span> を狙え！</div>
 <p class="mission-hint" id="missionHint"></p>
 </section>
@@ -362,6 +372,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <div class="result-head" id="resultHead">
 <div class="confetti" id="confetti" aria-hidden="true"></div>
 <img class="result-photo" id="resultPhoto" alt="診断に使った顔写真">
+<div class="result-face" id="resultFace" role="img" aria-label="診断結果タイプの顔イラスト"></div>
 <div class="group" id="resultGroup"></div>
 <div class="mbti-letters" id="resultCode"></div>
 <div class="type-name" id="resultName"></div>
@@ -408,7 +419,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <!-- 16 TYPES -->
 <section class="section">
 <h2>16タイプ図鑑</h2>
-<p class="sub">タップで説明が見られます</p>
+<p class="sub">タップで顔イラストと説明が見られます</p>
 <div class="type-grid" id="typeGrid"></div>
 </section>
 
@@ -439,6 +450,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <div class="modal-head" id="modalHead">
 <button class="modal-close" id="typeModalClose" type="button" aria-label="閉じて前にいた画面に戻る">×</button>
 <div class="group" id="modalGroup"></div>
+<div class="modal-face" id="modalFace" role="img" aria-label="タイプの顔イラスト"></div>
 <div class="code" id="modalCode"></div>
 <div class="nm" id="modalName"></div>
 <div class="catch" id="modalCatch"></div>
@@ -490,6 +502,125 @@ ISTJ:"#35679E", ISFJ:"#4A84B8", ESTJ:"#2C5C8C", ESFJ:"#5B97C9",
 ISTP:"#C47F17", ISFP:"#D99A2B", ESTP:"#B96E0E", ESFP:"#E8A81C"
 };
 function typeColor(code){ return TYPE_COLORS[code] || GROUPS[TYPES[code].g].color; }
+/* ---------- 16タイプ幾何学フェイス（顔のみ・正面・図形のみで構成） ---------- */
+var TYPE_FACES = {
+INTJ:{shape:"hexagon", eyes:"tri", mouth:"line", deco:"antenna", accent:"#FFC531"},
+INTP:{shape:"pentagon", eyes:"circleSquare", mouth:"ocircle", deco:"dots", accent:"#0FB5A6"},
+ENTJ:{shape:"shield", eyes:"boldRect", mouth:"smirk", deco:"crown", accent:"#FFC531"},
+ENTP:{shape:"diamond", eyes:"star", mouth:"zigzag", deco:"boltSide", accent:"#FFC531"},
+INFJ:{shape:"ovalTall", eyes:"arcClosed", mouth:"smallArc", deco:"halo", accent:"#FFC531"},
+INFP:{shape:"teardrop", eyes:"heart", mouth:"tinyArc", deco:"flower", accent:"#FFD1E3"},
+ENFJ:{shape:"ovalWide", eyes:"bigCircle", mouth:"bigSmile", deco:"sunRays", accent:"#FFC531"},
+ENFP:{shape:"starburst", eyes:"starCircle", mouth:"openD", deco:"confetti", accent:"#FF6B4A"},
+ISTJ:{shape:"square", eyes:"square", mouth:"lineThick", deco:"tie", accent:"#FFC531"},
+ISFJ:{shape:"roundSquare", eyes:"smallCircle", mouth:"smallArc", deco:"plus", accent:"#FFD1E3"},
+ESTJ:{shape:"trapezoid", eyes:"hRect", mouth:"teeth", deco:"flag", accent:"#FFC531"},
+ESFJ:{shape:"circle", eyes:"smileArc", mouth:"bigArc", deco:"bow", accent:"#FF8FAB"},
+ISTP:{shape:"triangle", eyes:"slit", mouth:"diagLine", deco:"gear", accent:"#E8EEF5"},
+ISFP:{shape:"leaf", eyes:"oval", mouth:"wave", deco:"leafTop", accent:"#BFE8C8"},
+ESTP:{shape:"triangleDown", eyes:"para", mouth:"smirk", deco:"boltForehead", accent:"#FFC531"},
+ESFP:{shape:"octagon", eyes:"diamondEye", mouth:"openD", deco:"confettiStar", accent:"#FF6B4A"}
+};
+function starPoints(cx,cy,ro,ri,n,rot){
+var pts=[]; for(var i=0;i<n*2;i++){ var r=i%2===0?ro:ri; var a=(Math.PI*i/n)+(rot||0)-Math.PI/2; pts.push((cx+r*Math.cos(a)).toFixed(1)+","+(cy+r*Math.sin(a)).toFixed(1)); } return pts.join(" ");
+}
+function heartPath(cx,cy,s){ return "M"+cx+" "+(cy+s*0.9)+" C "+(cx-s*1.3)+" "+(cy-s*0.1)+", "+(cx-s*0.7)+" "+(cy-s*1.1)+", "+cx+" "+(cy-s*0.35)+" C "+(cx+s*0.7)+" "+(cy-s*1.1)+", "+(cx+s*1.3)+" "+(cy-s*0.1)+", "+cx+" "+(cy+s*0.9)+" Z"; }
+function boltPoints(cx,cy,s){ return (cx+s*0.35)+","+(cy-s)+" "+(cx-s*0.55)+","+(cy+s*0.15)+" "+(cx-s*0.02)+","+(cy+s*0.15)+" "+(cx-s*0.35)+","+(cy+s)+" "+(cx+s*0.55)+","+(cy-s*0.15)+" "+(cx+s*0.02)+","+(cy-s*0.15); }
+function headShapeSVG(shape, fill){
+var st='fill="'+fill+'" stroke="#2B2118" stroke-width="3.5" stroke-linejoin="round"';
+switch(shape){
+case "hexagon": return '<polygon points="60,20 95,41 95,83 60,104 25,83 25,41" '+st+'/>';
+case "pentagon": return '<polygon points="60,18 100,47 85,102 35,102 20,47" '+st+'/>';
+case "shield": return '<path d="M60 15 L96 27 V60 C96 87 79 101 60 108 C41 101 24 87 24 60 V27 Z" '+st+'/>';
+case "diamond": return '<polygon points="60,14 102,62 60,110 18,62" '+st+'/>';
+case "ovalTall": return '<ellipse cx="60" cy="62" rx="31" ry="43" '+st+'/>';
+case "teardrop": return '<path d="M60 13 C77 37 97 57 97 77 A37 32 0 1 1 23 77 C23 57 43 37 60 13 Z" '+st+'/>';
+case "ovalWide": return '<ellipse cx="60" cy="63" rx="43" ry="33" '+st+'/>';
+case "starburst": return '<polygon points="'+starPoints(60,62,46,36,12)+'" '+st+'/>';
+case "square": return '<rect x="23" y="25" width="74" height="74" '+st+'/>';
+case "roundSquare": return '<rect x="23" y="25" width="74" height="74" rx="22" '+st+'/>';
+case "trapezoid": return '<polygon points="37,23 83,23 101,101 19,101" '+st+'/>';
+case "circle": return '<circle cx="60" cy="62" r="39" '+st+'/>';
+case "triangle": return '<polygon points="60,16 103,102 17,102" '+st+'/>';
+case "leaf": return '<path d="M60 14 C94 28 102 60 60 108 C18 60 26 28 60 14 Z" '+st+'/>';
+case "triangleDown": return '<polygon points="18,22 102,22 60,108" '+st+'/>';
+case "octagon": return '<polygon points="42,21 78,21 101,44 101,80 78,103 42,103 19,80 19,44" '+st+'/>';
+default: return '<circle cx="60" cy="62" r="39" '+st+'/>';
+}
+}
+function eyesSVG(kind, ink){
+var s='';
+if(kind==="tri"){ s='<polygon points="35,65 53,65 44,49" fill="'+ink+'"/><polygon points="67,65 85,65 76,49" fill="'+ink+'"/>'; }
+else if(kind==="circleSquare"){ s='<circle cx="44" cy="57" r="7" fill="'+ink+'"/><rect x="69" y="50" width="14" height="14" fill="'+ink+'"/>'; }
+else if(kind==="boldRect"){ s='<rect x="33" y="51" width="20" height="9" fill="'+ink+'" transform="rotate(-12 43 55)"/><rect x="67" y="51" width="20" height="9" fill="'+ink+'" transform="rotate(12 77 55)"/>'; }
+else if(kind==="star"){ s='<polygon points="'+starPoints(44,57,10,4.5,5)+'" fill="'+ink+'"/><polygon points="'+starPoints(76,57,10,4.5,5)+'" fill="'+ink+'"/>'; }
+else if(kind==="arcClosed"){ s='<path d="M35 59 Q44 50 53 59" fill="none" stroke="'+ink+'" stroke-width="4" stroke-linecap="round"/><path d="M67 59 Q76 50 85 59" fill="none" stroke="'+ink+'" stroke-width="4" stroke-linecap="round"/>'; }
+else if(kind==="heart"){ s='<path d="'+heartPath(44,58,8)+'" fill="'+ink+'"/><path d="'+heartPath(76,58,8)+'" fill="'+ink+'"/>'; }
+else if(kind==="bigCircle"){ s='<circle cx="44" cy="57" r="8" fill="'+ink+'"/><circle cx="47" cy="54" r="2.6" fill="#fff"/><circle cx="76" cy="57" r="8" fill="'+ink+'"/><circle cx="79" cy="54" r="2.6" fill="#fff"/>'; }
+else if(kind==="starCircle"){ s='<polygon points="'+starPoints(44,57,10,4.5,5)+'" fill="'+ink+'"/><circle cx="76" cy="57" r="7.5" fill="'+ink+'"/><circle cx="78.5" cy="54.5" r="2.4" fill="#fff"/>'; }
+else if(kind==="square"){ s='<rect x="37" y="50" width="13" height="13" fill="'+ink+'"/><rect x="70" y="50" width="13" height="13" fill="'+ink+'"/>'; }
+else if(kind==="smallCircle"){ s='<circle cx="44" cy="57" r="5.5" fill="'+ink+'"/><circle cx="76" cy="57" r="5.5" fill="'+ink+'"/>'; }
+else if(kind==="hRect"){ s='<rect x="34" y="53" width="19" height="7" fill="'+ink+'"/><rect x="67" y="53" width="19" height="7" fill="'+ink+'"/>'; }
+else if(kind==="smileArc"){ s='<path d="M35 62 Q44 51 53 62" fill="none" stroke="'+ink+'" stroke-width="4" stroke-linecap="round"/><path d="M67 62 Q76 51 85 62" fill="none" stroke="'+ink+'" stroke-width="4" stroke-linecap="round"/>'; }
+else if(kind==="slit"){ s='<rect x="33" y="60" width="19" height="4.5" fill="'+ink+'"/><rect x="68" y="60" width="19" height="4.5" fill="'+ink+'"/>'; }
+else if(kind==="oval"){ s='<ellipse cx="44" cy="58" rx="5" ry="8.5" fill="'+ink+'"/><ellipse cx="76" cy="58" rx="5" ry="8.5" fill="'+ink+'"/>'; }
+else if(kind==="para"){ s='<polygon points="36,51 54,51 49,63 31,63" fill="'+ink+'"/><polygon points="84,51 66,51 71,63 89,63" fill="'+ink+'"/>'; }
+else if(kind==="diamondEye"){ s='<polygon points="44,47 53,58 44,69 35,58" fill="'+ink+'"/><polygon points="76,47 85,58 76,69 67,58" fill="'+ink+'"/>'; }
+return s;
+}
+function mouthSVG(kind, ink){
+var s='';
+if(kind==="line"){ s='<line x1="49" y1="83" x2="71" y2="83" stroke="'+ink+'" stroke-width="4" stroke-linecap="round"/>'; }
+else if(kind==="lineThick"){ s='<line x1="47" y1="82" x2="73" y2="82" stroke="'+ink+'" stroke-width="5.5" stroke-linecap="round"/>'; }
+else if(kind==="ocircle"){ s='<circle cx="60" cy="83" r="6.5" fill="none" stroke="'+ink+'" stroke-width="3.5"/>'; }
+else if(kind==="smirk"){ s='<path d="M47 80 Q61 91 75 79" fill="none" stroke="'+ink+'" stroke-width="4" stroke-linecap="round"/>'; }
+else if(kind==="zigzag"){ s='<polyline points="43,84 51,77 59,84 67,77 77,84" fill="none" stroke="'+ink+'" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>'; }
+else if(kind==="smallArc"){ s='<path d="M50 80 Q60 88 70 80" fill="none" stroke="'+ink+'" stroke-width="3.5" stroke-linecap="round"/>'; }
+else if(kind==="tinyArc"){ s='<path d="M53 81 Q60 86 67 81" fill="none" stroke="'+ink+'" stroke-width="3.5" stroke-linecap="round"/>'; }
+else if(kind==="bigSmile"){ s='<path d="M41 77 A19 19 0 0 0 79 77 Z" fill="'+ink+'"/>'; }
+else if(kind==="bigArc"){ s='<path d="M44 78 Q60 94 76 78" fill="none" stroke="'+ink+'" stroke-width="4.5" stroke-linecap="round"/>'; }
+else if(kind==="openD"){ s='<path d="M45 77 L75 77 A15 13 0 0 1 45 77 Z" fill="'+ink+'"/>'; }
+else if(kind==="teeth"){ s='<rect x="47" y="77" width="26" height="10" fill="#fff" stroke="'+ink+'" stroke-width="3"/><line x1="60" y1="77" x2="60" y2="87" stroke="'+ink+'" stroke-width="2"/>'; }
+else if(kind==="diagLine"){ s='<line x1="50" y1="88" x2="71" y2="80" stroke="'+ink+'" stroke-width="4" stroke-linecap="round"/>'; }
+else if(kind==="wave"){ s='<path d="M44 84 Q52 77 60 84 Q68 91 76 84" fill="none" stroke="'+ink+'" stroke-width="3.5" stroke-linecap="round"/>'; }
+return s;
+}
+function decoBehindSVG(kind, accent){
+if(kind==="sunRays"){ var s=''; for(var i=0;i<8;i++){ var a=Math.PI*i/4; var x1=60+Math.cos(a)*44, y1=62+Math.sin(a)*44, x2=60+Math.cos(a)*54, y2=62+Math.sin(a)*54; s+='<line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="'+accent+'" stroke-width="5" stroke-linecap="round"/>'; } return s; }
+if(kind==="confetti"||kind==="confettiStar"){ return '<polygon points="14,30 22,30 18,38" fill="'+accent+'"/><circle cx="104" cy="34" r="4.5" fill="'+accent+'"/><polygon points="10,82 18,82 14,90" fill="#0FB5A6"/><circle cx="106" cy="86" r="4" fill="#FFC531"/><rect x="12" y="56" width="7" height="7" fill="#FF6B4A" transform="rotate(20 15 59)"/>'; }
+return '';
+}
+function decoFrontSVG(kind, accent, ink){
+var s='';
+if(kind==="antenna"){ s='<line x1="60" y1="20" x2="60" y2="7" stroke="'+ink+'" stroke-width="3.5"/><polygon points="60,0 67,8 60,16 53,8" fill="'+accent+'" stroke="'+ink+'" stroke-width="2.5" stroke-linejoin="round"/>'; }
+else if(kind==="dots"){ s='<circle cx="38" cy="10" r="4" fill="'+accent+'"/><circle cx="60" cy="5" r="5" fill="#FF6B4A"/><circle cx="82" cy="10" r="4" fill="#FFC531"/>'; }
+else if(kind==="crown"){ s='<polygon points="36,24 36,6 48,15 60,2 72,15 84,6 84,24" fill="'+accent+'" stroke="'+ink+'" stroke-width="2.5" stroke-linejoin="round"/>'; }
+else if(kind==="boltSide"){ s='<polygon points="'+boltPoints(102,34,11)+'" fill="'+accent+'" stroke="'+ink+'" stroke-width="2" stroke-linejoin="round"/>'; }
+else if(kind==="halo"){ s='<ellipse cx="60" cy="9" rx="23" ry="6.5" fill="none" stroke="'+accent+'" stroke-width="5"/>'; }
+else if(kind==="flower"){ var f=''; var cx=93,cy=22; for(var i=0;i<5;i++){ var a=Math.PI*2*i/5-Math.PI/2; f+='<circle cx="'+(cx+Math.cos(a)*7).toFixed(1)+'" cy="'+(cy+Math.sin(a)*7).toFixed(1)+'" r="5" fill="'+accent+'" stroke="'+ink+'" stroke-width="1.8"/>'; } s=f+'<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="#FFC531" stroke="'+ink+'" stroke-width="1.8"/>'; }
+else if(kind==="tie"){ s='<polygon points="60,106 51,88 69,88" fill="'+accent+'" stroke="'+ink+'" stroke-width="2.5" stroke-linejoin="round"/>'; }
+else if(kind==="plus"){ s='<g fill="'+accent+'" stroke="'+ink+'" stroke-width="1.8"><rect x="55" y="30" width="10" height="4.5"/><rect x="57.7" y="27.2" width="4.5" height="10"/></g>'; }
+else if(kind==="flag"){ s='<line x1="60" y1="23" x2="60" y2="4" stroke="'+ink+'" stroke-width="3.5"/><polygon points="60,4 78,9 60,15" fill="'+accent+'" stroke="'+ink+'" stroke-width="2" stroke-linejoin="round"/>'; }
+else if(kind==="bow"){ s='<polygon points="88,26 104,16 104,36" fill="'+accent+'" stroke="'+ink+'" stroke-width="2.2" stroke-linejoin="round"/><polygon points="88,26 72,16 72,36" fill="'+accent+'" stroke="'+ink+'" stroke-width="2.2" stroke-linejoin="round"/><circle cx="88" cy="26" r="5" fill="#FFC531" stroke="'+ink+'" stroke-width="2.2"/>'; }
+else if(kind==="gear"){ s='<polygon points="'+starPoints(97,84,11,8,6)+'" fill="'+accent+'" stroke="'+ink+'" stroke-width="2.2" stroke-linejoin="round"/><circle cx="97" cy="84" r="3.5" fill="#fff" stroke="'+ink+'" stroke-width="1.8"/>'; }
+else if(kind==="leafTop"){ s='<path d="M60 16 C60 4 70 0 80 2 C79 12 72 18 60 16 Z" fill="'+accent+'" stroke="'+ink+'" stroke-width="2.2" stroke-linejoin="round"/>'; }
+else if(kind==="boltForehead"){ s='<polygon points="'+boltPoints(60,36,9)+'" fill="'+accent+'" stroke="'+ink+'" stroke-width="1.8" stroke-linejoin="round"/>'; }
+if(kind==="confettiStar"){ s+='<polygon points="'+starPoints(28,88,7,3,5)+'" fill="'+accent+'"/>'; }
+if(kind==="sunRays"){ /* behind only */ }
+return s;
+}
+function faceSVG(code){
+var f=TYPE_FACES[code]; if(!f) return '';
+var fill=typeColor(code); var ink="#2B2118";
+var label=(TYPES[code]?code+" "+TYPES[code].name+"タイプの幾何学フェイス":"");
+return '<svg viewBox="0 0 120 120" role="img" aria-label="'+label+'" xmlns="http://www.w3.org/2000/svg">'
++ decoBehindSVG(f.deco, f.accent)
++ headShapeSVG(f.shape, fill)
++ eyesSVG(f.eyes, ink)
++ mouthSVG(f.mouth, ink)
++ decoFrontSVG(f.deco, f.accent, ink)
++ '</svg>';
+}
 var TYPES = {
 INTJ:{g:"analyst", name:"建築家", catch:"静かな顔に、大きな設計図", desc:"落ち着いた表情の奥に、先の先まで見通す視点が隠れているタイプ。写真の整ったバランス感から、感情に流されず自分の計画を淡々と進める「戦略家」の空気が漂います。群れるより、一人で考える時間にこそ力を発揮します。", tags:["戦略家","独立心","完璧主義"], strong:"長期計画を立てて、ブレずに実行できるところ", weak:"説明が端的すぎて、冷たいと誤解されがち", love:"好意は言葉より行動と時間の使い方で示すタイプ", work:"仕組みから作り直す仕事で真価を発揮", match:["ENFP","ENTP"]},
 INTP:{g:"analyst", name:"論理学者", catch:"ぼんやり顔の、好奇心モンスター", desc:"どこか遠くを見ているような表情が印象的。頭の中では常に「なんで？」が渦巻いていて、興味を持ったテーマは深夜まで掘り下げてしまうタイプです。写真の柔らかいコントラストから、物腰は穏やかでも思考は鋭いギャップが見えます。", tags:["好奇心","分析好き","マイペース"], strong:"物事の仕組みを素早く見抜く洞察力", weak:"興味のないことへの集中力が続きにくい", love:"知的な会話が弾む相手に惹かれる", work:"研究・分析・仕様を詰める場面で輝く", match:["ENTJ","ESTJ"]},
@@ -510,7 +641,7 @@ ESFP:{g:"explorer", name:"エンターテイナー", catch:"満面の笑みの�
 };
 var ORDER = ["INTJ","INTP","ENTJ","ENTP","INFJ","INFP","ENFJ","ENFP","ISTJ","ISFJ","ESTJ","ESFJ","ISTP","ISFP","ESTP","ESFP"];
 
-/* ---------- 今日の表情ミッション（日替わり） ---------- */
+/* ---------- 表情ミッション（何回でも引き直し可） ---------- */
 var MISSIONS = {
 INTJ:{expr:"クールに顎を引いた真顔", hint:"明るさを少し抑えた落ち着いた表情で。整ったバランスと強いコントラストがINTJ寄せのコツです。"},
 INTP:{expr:"ぼんやり遠くを見る顔", hint:"力を抜いて視線を少し外すと雰囲気が出ます。柔らかい光で撮るのがポイント。"},
@@ -529,13 +660,13 @@ ISFP:{expr:"ナチュラルで柔らかい顔", hint:"作り込まない自然�
 ESTP:{expr:"自信満々なワイルド顔", hint:"強い目線と躍動感を意識して。はっきりした輪郭とコントラストでESTPに。"},
 ESFP:{expr:"全開の笑顔", hint:"とにかく明るく、鮮やかに！ 笑顔全開＋カラフルな背景がESFPへの近道です。"}
 };
-function dailyMission(){
-var now=new Date();
-var days=Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())/86400000);
-var code=ORDER[((days%ORDER.length)+ORDER.length)%ORDER.length];
-return { code:code, expr:MISSIONS[code].expr, hint:MISSIONS[code].hint, date:now };
+function randomMission(excludeCode){
+var pool=ORDER.filter(function(c){ return c!==excludeCode; });
+if(!pool.length) pool=ORDER.slice();
+var code=pool[Math.floor(Math.random()*pool.length)];
+return { code:code, expr:MISSIONS[code].expr, hint:MISSIONS[code].hint };
 }
-var MISSION = dailyMission();
+var MISSION = randomMission(null);
 var AXIS_ADVICE = [
 function(t){ return t==="E" ? "E寄せのコツ：明るい場所で、口角を上げた大きな笑顔で撮ってみて" : "I寄せのコツ：落ち着いた表情で、柔らかい光の場所で撮ってみて"; },
 function(t){ return t==="S" ? "S寄せのコツ：ピントをくっきり合わせて、はっきりした表情で" : "N寄せのコツ：少し遠くを見るような、ぼんやりした雰囲気で"; },
@@ -566,9 +697,7 @@ var mc=$("missionCard"); if(mc) mc.classList.toggle("hidden", !v);
 }
 
 /* ---------- ミッションカード表示 ---------- */
-(function(){
-var wd=["日","月","火","水","木","金","土"][MISSION.date.getDay()];
-$("missionDate").textContent=(MISSION.date.getMonth()+1)+"月"+MISSION.date.getDate()+"日（"+wd+"）";
+function renderMission(){
 $("missionExpr").textContent=MISSION.expr;
 var targetEl=$("missionTarget");
 var mt=TYPES[MISSION.code];
@@ -576,7 +705,14 @@ targetEl.textContent=MISSION.code+"（"+mt.name+"）";
 targetEl.style.background=typeColor(MISSION.code);
 targetEl.style.color=textOn(typeColor(MISSION.code));
 $("missionHint").textContent=MISSION.hint;
-})();
+}
+renderMission();
+$("missionResetBtn").addEventListener("click", function(){
+MISSION=randomMission(MISSION.code);
+current.missionAchieved=false;
+renderMission();
+showToast("お題を変えました");
+});
 
 /* ---------- サンプルの顔イラスト ---------- */
 var SAMPLES = [
@@ -1004,6 +1140,8 @@ renderMissionResult(isDiagnosis);
 var rd=$("resultDetails"); if(rd) rd.open=false;
 shareCanvas=null;
 $("resultPhoto").src=current.dataUrl;
+$("resultFace").innerHTML=faceSVG(m.code);
+$("resultFace").setAttribute("aria-label", m.code+" "+t.name+"タイプの顔イラスト");
 $("resultHead").style.background=typeColor(m.code);
 $("resultHead").style.color=textOn(typeColor(m.code));
 $("resultGroup").textContent=g.label;
@@ -1090,6 +1228,8 @@ var t=TYPES[code], g=GROUPS[t.g];
 lastFocusedBeforeModal=document.activeElement;
 $("modalHead").style.background=typeColor(code);
 $("modalHead").style.color=textOn(typeColor(code));
+$("modalFace").innerHTML=faceSVG(code);
+$("modalFace").setAttribute("aria-label", code+" "+t.name+"タイプの顔イラスト");
 $("modalGroup").textContent=g.label;
 $("modalCode").textContent=code;
 $("modalName").textContent=t.name+"タイプ";
@@ -1265,7 +1405,7 @@ var b=document.createElement("button");
 b.type="button"; b.className="type-cell";
 b.style.background=typeColor(code);
 b.style.color=textOn(typeColor(code));
-b.innerHTML='<span class="code">'+code+'</span><span class="nm">'+t.name+'</span>';
+b.innerHTML='<span class="type-face" aria-hidden="true">'+faceSVG(code)+'</span><span class="code">'+code+'</span><span class="nm">'+t.name+'</span>';
 b.setAttribute("aria-label", code+" "+t.name+"タイプの説明を見る");
 b.addEventListener("click", function(){ previewType(code);});
 grid.appendChild(b);
