@@ -11,27 +11,27 @@
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
---bg:#FFF8EE; --bg2:#FFF1DC; --card:#FFFFFF; --card2:#FFF6E8;
---ink:#2B2118; --ink2:#6B5D4F; --line:#F0DEC3;
---coral:#FF6B4A; --coral-d:#E84E2C; --teal:#0FB5A6; --teal-d:#078A7E;
---yellow:#FFC531;
---axis-ei:#FF6B4A; --axis-sn:#E8A020; --axis-tf:#3E7CB8; --axis-jp:#35945E;
---group-analyst:#7A5AC0; --group-diplomat:#35945E; --group-sentinel:#3A76B5; --group-explorer:#DE9512;
---paper:#FFF8EE; --paper-ink:#2B2118; --paper-sub:#6B5D4F; --paper-line:#F0DEC3;
---drop-border:#EFC98F; --metric-val:var(--coral-d);
---achieved-bg:#FFF3D1; --achieved-title:var(--coral-d); --focus-ring:#0FB5A6;
---shadow:0 10px 30px rgba(90,55,10,.10);
+--bg:#EDE5CC; --bg2:#E3D7B4; --card:#FBF7EA; --card2:#F4EDD6;
+--ink:#1D2A44; --ink2:#5D5C4C; --line:#D8CBA3;
+--coral:#EE5346; --coral-d:#D63E31; --teal:#0E7C8C; --teal-d:#0A5F6B;
+--yellow:#F2A03D;
+--axis-ei:#EE5346; --axis-sn:#D9820B; --axis-tf:#2C4A73; --axis-jp:#0E7C8C;
+--group-analyst:#31456E; --group-diplomat:#0E7C8C; --group-sentinel:#46688A; --group-explorer:#D97A1F;
+--paper:#FBF7EA; --paper-ink:#1D2A44; --paper-sub:#5D5C4C; --paper-line:#D8CBA3;
+--drop-border:#C2B183; --metric-val:var(--coral-d);
+--achieved-bg:#FBEED3; --achieved-title:var(--coral-d); --focus-ring:#0E7C8C;
+--shadow:0 10px 30px rgba(29,42,68,.14);
 --r-card:28px; --r-box:16px; --r-pill:999px;
 --fs-note:12px; --fs-sub:13.5px; --fs-body:15.5px;
 --fs-lead:17px; --fs-step:18px; --fs-subtitle:19px; --fs-h2:21px; --fs-h2-lg:24px; --fs-mission:clamp(17px,4.6vw,20px);
 }
 @media (prefers-color-scheme: dark){
 :root{
---bg:#1C1712; --bg2:#241C15; --card:#2A211A; --card2:#33281E;
---ink:#FFF3E2; --ink2:#CBBBA6; --line:#4A3A2A;
---drop-border:#6B543A; --metric-val:var(--yellow);
---achieved-bg:#4A3A14; --achieved-title:var(--yellow); --focus-ring:var(--yellow);
---shadow:0 10px 30px rgba(0,0,0,.35);
+--bg:#131B2E; --bg2:#0E1524; --card:#1E2A44; --card2:#263453;
+--ink:#F4EFDC; --ink2:#C2C0AA; --line:#3B4C73;
+--drop-border:#54678F; --metric-val:var(--yellow);
+--achieved-bg:#3D3016; --achieved-title:var(--yellow); --focus-ring:var(--yellow);
+--shadow:0 10px 30px rgba(0,0,0,.4);
 }
 }
 *{box-sizing:border-box}
@@ -41,7 +41,10 @@ button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]
 button{font-family:inherit;cursor:pointer}
 .wrap{max-width:880px;margin:0 auto;padding:0 18px 56px}
 /* HERO */
-.hero{padding:34px 0 8px;text-align:center}
+.hero{padding:34px 0 8px;text-align:center;position:relative}
+.hero-facets{position:absolute;inset:-4px -16px auto;height:200px;pointer-events:none;z-index:0}
+.hero-facets svg{width:100%;height:100%;display:block}
+.hero>*:not(.hero-facets){position:relative;z-index:1}
 .badge{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:var(--bg);font-size:var(--fs-note);font-weight:800;letter-spacing:.08em;padding:7px 14px;border-radius:var(--r-pill)}
 .badge i{width:7px;height:7px;border-radius:50%;background:var(--yellow);display:inline-block}
 h1{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:clamp(34px,8vw,56px);line-height:1.08;margin:16px 0 10px;letter-spacing:.01em}
@@ -53,17 +56,15 @@ h1 .hl2{color:var(--ink)}
 .hero-tags span{font-size:var(--fs-note);font-weight:800;background:var(--card);border:1.5px solid var(--line);padding:7px 12px;border-radius:var(--r-pill)}
 /* UPLOAD */
 .stage{margin-top:26px}
-.drop{background:var(--card);border:2.5px dashed var(--drop-border);border-radius:var(--r-card);padding:34px 20px;text-align:center;box-shadow:var(--shadow);transition:border-color.2s, background.2s}
+.drop{background:var(--card);border:2.5px dashed var(--drop-border);border-radius:var(--r-card);padding:34px 20px;text-align:center;box-shadow:var(--shadow);transition:border-color.2s, background.2s;position:relative}
+.drop::before,.drop::after{content:"";position:absolute;width:30px;height:30px;pointer-events:none}
+.drop::before{top:13px;left:13px;background:var(--teal);clip-path:polygon(0 0,100% 0,0 100%);opacity:.8}
+.drop::after{bottom:13px;right:13px;background:var(--coral);clip-path:polygon(100% 0,100% 100%,0 100%);opacity:.8}
 .drop.drag{border-color:var(--coral);background:var(--card2)}
-.face-illo{width:118px;height:118px;margin:2px auto 14px;position:relative}
-.face-illo .face{width:118px;height:118px;border-radius:50%;background:#FFE3B3;border:3px solid var(--ink);position:relative;overflow:hidden}
-.face-illo .eye{position:absolute;top:48px;width:13px;height:18px;border-radius:50%;background:var(--ink)}
-.face-illo .eye.l{left:32px}.face-illo .eye.r{right:32px}
-.face-illo .mouth{position:absolute;left:50%;top:74px;width:34px;height:18px;transform:translateX(-50%);border:3.5px solid var(--ink);border-top:none;border-left:none;border-right:none;border-radius:0 0 34px 34px}
-.face-illo .cheek{position:absolute;top:66px;width:20px;height:12px;border-radius:50%;background:#FFB1A0;opacity:.85}
-.face-illo .cheek.l{left:12px}.face-illo .cheek.r{right:12px}
-.face-illo .scan{position:absolute;left:-4px;right:-4px;top:8px;height:26px;background:linear-gradient(180deg,transparent,rgba(15,181,166,.35),transparent);border-bottom:2px solid var(--teal);animation:scan 2.4s ease-in-out infinite}
-@keyframes scan{0%,100%{top:6px}50%{top:84px}}
+.face-illo{width:126px;height:126px;margin:2px auto 14px;position:relative}
+.face-illo svg{width:100%;height:100%;display:block;filter:drop-shadow(0 6px 10px rgba(29,42,68,.20))}
+.face-illo .scan{position:absolute;left:4px;right:4px;top:8px;height:26px;background:linear-gradient(180deg,transparent,rgba(14,124,140,.35),transparent);border-bottom:2px solid var(--teal);animation:scan 2.4s ease-in-out infinite;pointer-events:none}
+@keyframes scan{0%,100%{top:6px}50%{top:90px}}
 @media (prefers-reduced-motion: reduce){.face-illo .scan{animation:none}}
 .drop h2{font-family:"Zen Maru Gothic",sans-serif;font-size:var(--fs-h2);margin:0 0 6px}
 .drop p{color:var(--ink2);font-size:var(--fs-sub);font-weight:700;margin:0 0 18px}
@@ -84,7 +85,7 @@ h1 .hl2{color:var(--ink)}
 .preview-card{background:var(--card);border-radius:var(--r-card);box-shadow:var(--shadow);padding:22px;text-align:center;border:1.5px solid var(--line)}
 .photo-frame{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:0 auto;border-radius:var(--r-box);overflow:hidden;background:#000}
 .photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
-.photo-frame .scanline{position:absolute;left:0;right:0;top:0;height:56px;background:linear-gradient(180deg,transparent,rgba(15,181,166,.45),transparent);border-bottom:3px solid var(--teal);display:none}
+.photo-frame .scanline{position:absolute;left:0;right:0;top:0;height:56px;background:linear-gradient(180deg,transparent,rgba(14,124,140,.45),transparent);border-bottom:3px solid var(--teal);display:none}
 .analyzing .photo-frame .scanline{display:block;animation:scan2 1.1s ease-in-out infinite}
 @keyframes scan2{0%{top:-10px}100%{top:calc(100% - 40px)}}
 .corner{position:absolute;width:26px;height:26px;border:4px solid var(--yellow);display:none}
@@ -196,6 +197,9 @@ h1 .hl2{color:var(--ink)}
 /* 16 TYPES */
 .section{margin-top:44px}
 .section h2{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:var(--fs-h2-lg);margin:0 0 4px;text-align:center}
+.section h2::before,.section h2::after{content:"";display:inline-block;width:13px;height:13px;margin:0 10px 2px;vertical-align:baseline}
+.section h2::before{background:var(--teal);clip-path:polygon(0 0,100% 50%,0 100%)}
+.section h2::after{background:var(--coral);clip-path:polygon(100% 0,0 50%,100% 100%)}
 .section .sub{text-align:center;color:var(--ink2);font-weight:700;font-size:var(--fs-sub);margin:0 0 18px}
 .type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 @media (max-width:640px){.type-grid{gap:6px}.type-cell{padding:8px 2px 8px;min-height:92px;border-radius:12px}.type-cell .code{font-size:15px;letter-spacing:.01em}.type-cell .nm{font-size:10.5px;line-height:1.3}.type-face{width:46px;height:46px;margin-bottom:2px}.type-face img{border-radius:10px}}
@@ -250,13 +254,14 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 .modal-head .catch{font-size:var(--fs-sub);font-weight:700;opacity:.95}
 .modal-body{padding:18px 22px 22px}
 .modal-body .desc{margin-bottom:14px}
-.modal-close{position:absolute;top:12px;right:12px;width:40px;height:40px;min-height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.92);color:#2B2118;font-size:20px;font-weight:900;line-height:1;display:inline-flex;align-items:center;justify-content:center}
+.modal-close{position:absolute;top:12px;right:12px;width:40px;height:40px;min-height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.92);color:#1D2A44;font-size:20px;font-weight:900;line-height:1;display:inline-flex;align-items:center;justify-content:center}
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <header class="hero">
+<div class="hero-facets" aria-hidden="true"><svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMin slice"><polygon points="2,26 36,8 26,48" fill="#EE5346" opacity=".65"/><polygon points="26,48 58,32 46,72" fill="#0E7C8C" opacity=".55"/><polygon points="0,96 28,76 32,114" fill="#F2A03D" opacity=".6"/><polygon points="10,164 40,144 42,182" fill="#1D2A44" opacity=".45"/><polygon points="398,22 364,6 374,46" fill="#0E7C8C" opacity=".65"/><polygon points="374,46 342,30 354,70" fill="#EE5346" opacity=".55"/><polygon points="400,98 372,78 368,116" fill="#1D2A44" opacity=".45"/><polygon points="390,166 360,146 358,184" fill="#F2A03D" opacity=".6"/></svg></div>
 <span class="badge"><i></i>エンタメ診断</span>
 <h1>顔写真でわかる<br><span class="hl">MBTI</span><span class="hl2">診断</span></h1>
 <p class="lead">顔写真から、雰囲気に近いタイプを診断します。</p>
@@ -266,12 +271,8 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <section class="stage" id="stageUpload">
 <div class="drop" id="dropZone">
 <div class="face-illo" aria-hidden="true">
-<div class="face">
-<span class="eye l"></span><span class="eye r"></span>
-<span class="cheek l"></span><span class="cheek r"></span>
-<span class="mouth"></span>
+<svg viewBox="0 0 120 120"><polygon points="14,44 25,25 46,14 44,38" fill="#0E7C8C"/><polygon points="46,14 74,14 76,38 44,38" fill="#1D2A44"/><polygon points="74,14 95,25 106,44 76,38" fill="#0A5F6B"/><polygon points="14,44 44,38 46,66 24,70" fill="#F7EFDA"/><polygon points="44,38 76,38 74,66 60,74 46,66" fill="#FCF8EC"/><polygon points="76,38 106,44 96,70 74,66" fill="#F1E5C6"/><polygon points="24,70 46,66 60,74 52,100 28,94" fill="#F4EBD2"/><polygon points="74,66 96,70 92,94 68,100 60,74" fill="#EFE0BC"/><polygon points="28,94 52,100 68,100 92,94 76,110 44,110" fill="#F7EFDA"/><polygon points="36,58 46,55 47,64 38,66" fill="#1D2A44"/><polygon points="74,55 84,58 82,66 73,64" fill="#1D2A44"/><polygon points="57,71 64,71 60,79" fill="#F2A03D"/><polygon points="26,76 37,74 32,85" fill="#EE5346" opacity=".85"/><polygon points="83,74 94,76 88,85" fill="#EE5346" opacity=".85"/><path d="M50,88 Q60,95 70,88" stroke="#1D2A44" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
 <span class="scan"></span>
-</div>
 </div>
 <h2>顔写真をえらんでね</h2>
 <p>正面の顔写真がおすすめです。</p>
@@ -485,21 +486,21 @@ var h=(hex||"").replace("#","");
 if(h.length!==6) return "#FFFFFF";
 var r=parseInt(h.substr(0,2),16), g=parseInt(h.substr(2,2),16), b=parseInt(h.substr(4,2),16);
 var lum=(0.2126*r + 0.7152*g + 0.0722*b)/255;
-return lum > 0.55 ? cssVar("--paper-ink", "#2B2118") : "#FFFFFF";
+return lum > 0.55 ? cssVar("--paper-ink", "#1D2A44") : "#FFFFFF";
 }
-var AXIS = { ei:cssVar("--axis-ei", "#FF6B4A"), sn:cssVar("--axis-sn", "#E8A020"), tf:cssVar("--axis-tf", "#3E7CB8"), jp:cssVar("--axis-jp", "#35945E") };
+var AXIS = { ei:cssVar("--axis-ei", "#EE5346"), sn:cssVar("--axis-sn", "#D9820B"), tf:cssVar("--axis-tf", "#2C4A73"), jp:cssVar("--axis-jp", "#0E7C8C") };
 var GROUPS = {
-analyst: { label:"分析家グループ", color:cssVar("--group-analyst", "#7A5AC0")},
-diplomat: { label:"外交官グループ", color:cssVar("--group-diplomat", "#35945E")},
-sentinel: { label:"番人グループ", color:cssVar("--group-sentinel", "#3A76B5")},
-explorer: { label:"探検家グループ", color:cssVar("--group-explorer", "#DE9512")}
+analyst: { label:"分析家グループ", color:cssVar("--group-analyst", "#31456E")},
+diplomat: { label:"外交官グループ", color:cssVar("--group-diplomat", "#0E7C8C")},
+sentinel: { label:"番人グループ", color:cssVar("--group-sentinel", "#46688A")},
+explorer: { label:"探検家グループ", color:cssVar("--group-explorer", "#D97A1F")}
 };
-/* 16タイプ色：グループの色相を保ちつつ、明度・彩度を近いレンジに揃えた16色（方針1.0の根拠マップどおり） */
+/* 16タイプ色：幾何学ペンギンのパレット（ネイビー／ティール／スチールブルー／コーラル・アンバー）に寄せ、グループごとに色相帯を分けた16色 */
 var TYPE_COLORS = {
-INTJ:"#6D4FB0", INTP:"#7E63C4", ENTJ:"#5B3FA3", ENTP:"#8A6FD1",
-INFJ:"#2E7D5B", INFP:"#3E9A6E", ENFJ:"#27714F", ENFP:"#4CAF7D",
-ISTJ:"#35679E", ISFJ:"#4A84B8", ESTJ:"#2C5C8C", ESFJ:"#5B97C9",
-ISTP:"#C47F17", ISFP:"#D99A2B", ESTP:"#B96E0E", ESFP:"#E8A81C"
+INTJ:"#26355C", INTP:"#3A4E7E", ENTJ:"#1D2A44", ENTP:"#4A5F94",
+INFJ:"#0A6272", INFP:"#2F8F83", ENFJ:"#0E7C8C", ENFP:"#35A06B",
+ISTJ:"#46688A", ISFJ:"#6E97B8", ESTJ:"#35526E", ESFJ:"#5E84A6",
+ISTP:"#C77408", ISFP:"#E8A33D", ESTP:"#D64A2E", ESFP:"#EE5346"
 };
 function typeColor(code){ return TYPE_COLORS[code] || GROUPS[TYPES[code].g].color; }
 /* ---------- 16タイプ幾何学フェイス画像（ローポリ幾何学ベクター生成画像・顔のみ・正面） ---------- */
@@ -604,9 +605,9 @@ showToast("お題を変えました");
 
 /* ---------- サンプルの顔イラスト ---------- */
 var SAMPLES = [
-{ bg:"#FFE3B3", skin:"#FFD9A0", hair:"#4A3226", eye:"#2B2118", label:"サンプル1：穏やかな顔"},
-{ bg:"#D8F3EE", skin:"#FFCFA8", hair:"#B3541E", eye:"#1E3A34", label:"サンプル2：明るい顔"},
-{ bg:"#FDE3EE", skin:"#FFE0BD", hair:"#22223A", eye:"#2B2118", label:"サンプル3：クールな顔"}
+{ bg:"#F6E7C8", skin:"#FFD9A0", hair:"#1D2A44", eye:"#1D2A44", label:"サンプル1：穏やかな顔"},
+{ bg:"#CFE8E6", skin:"#FFCFA8", hair:"#D64A2E", eye:"#14323A", label:"サンプル2：明るい顔"},
+{ bg:"#F8D9CF", skin:"#FFE0BD", hair:"#0E7C8C", eye:"#1D2A44", label:"サンプル3：クールな顔"}
 ];
 var samplesEl=$("samples");
 SAMPLES.forEach(function(s, idx){
@@ -1097,7 +1098,7 @@ $("missionResultText").textContent="目標は "+target+"（"+mt.name+"）。"+ad
 }
 function spawnConfetti(){
 var wrap=$("confetti");
-var colors=[cssVar("--yellow", "#FFC531"), AXIS.ei, cssVar("--teal", "#0FB5A6"), AXIS.sn, AXIS.tf, "#FFFFFF"];
+var colors=[cssVar("--yellow", "#F2A03D"), AXIS.ei, cssVar("--teal", "#0E7C8C"), AXIS.sn, AXIS.tf, "#FFFFFF"];
 for(var i=0;i<28;i++){
 var p=document.createElement("i");
 p.style.left=(Math.random()*100)+"%";
@@ -1183,9 +1184,9 @@ var x=c.getContext("2d");
 function draw(img){
 /* 背景＝そのタイプの色、内側にクリームのカード */
 x.fillStyle=typeColor(m.code); x.fillRect(0,0,1080,1920);
-x.fillStyle=cssVar("--paper", "#FFF8EE"); rr(x,48,48,984,1824,48); x.fill();
+x.fillStyle=cssVar("--paper", "#FBF7EA"); rr(x,48,48,984,1824,48); x.fill();
 /* 見出し */
-x.fillStyle=cssVar("--paper-ink", "#2B2118"); x.textAlign="center"; x.textBaseline="middle";
+x.fillStyle=cssVar("--paper-ink", "#1D2A44"); x.textAlign="center"; x.textBaseline="middle";
 x.font="800 40px 'M PLUS Rounded 1c', sans-serif";
 x.fillText("顔写真 MBTI 診断", 540, 138);
 /* 写真（円形・中央クロップ） */
@@ -1206,8 +1207,8 @@ x.beginPath(); x.arc(cx,cy,rad,0,Math.PI*2); x.stroke();
 /* ミッション達成スタンプ */
 if(current.missionAchieved){
 x.save(); x.translate(838,168); x.rotate(-0.18);
-x.lineWidth=5; x.strokeStyle=cssVar("--coral-d", "#E84E2C"); rr(x,-168,-46,336,92,16); x.stroke();
-x.fillStyle=cssVar("--coral-d", "#E84E2C"); x.font="900 44px 'Zen Maru Gothic', sans-serif";
+x.lineWidth=5; x.strokeStyle=cssVar("--coral-d", "#D63E31"); rr(x,-168,-46,336,92,16); x.stroke();
+x.fillStyle=cssVar("--coral-d", "#D63E31"); x.font="900 44px 'Zen Maru Gothic', sans-serif";
 x.fillText("ミッション達成！", 0, 2);
 x.restore();
 }
@@ -1216,9 +1217,9 @@ x.fillStyle=typeColor(m.code); x.font="800 36px 'M PLUS Rounded 1c', sans-serif"
 x.fillText(g.label, 540, 726);
 x.font="900 168px 'Zen Maru Gothic', sans-serif";
 x.fillText(m.code, 540, 838);
-x.fillStyle=cssVar("--paper-ink", "#2B2118"); x.font="900 66px 'Zen Maru Gothic', sans-serif";
+x.fillStyle=cssVar("--paper-ink", "#1D2A44"); x.font="900 66px 'Zen Maru Gothic', sans-serif";
 x.fillText(t.name+"タイプ", 540, 962);
-x.fillStyle=cssVar("--paper-sub", "#6B5D4F"); x.font="700 42px 'M PLUS Rounded 1c', sans-serif";
+x.fillStyle=cssVar("--paper-sub", "#5D5C4C"); x.font="700 42px 'M PLUS Rounded 1c', sans-serif";
 x.fillText("― "+t.catch+" ―", 540, 1042);
 /* 4軸バー */
 var dims=[
@@ -1229,22 +1230,22 @@ var dims=[
 ];
 dims.forEach(function(d, i){
 var y=1130+i*148;
-x.font="800 36px 'M PLUS Rounded 1c', sans-serif"; x.fillStyle=cssVar("--paper-ink", "#2B2118");
+x.font="800 36px 'M PLUS Rounded 1c', sans-serif"; x.fillStyle=cssVar("--paper-ink", "#1D2A44");
 x.textAlign="left"; x.fillText(d[0], 96, y);
 x.textAlign="right"; x.fillText(d[1], 984, y);
 x.textAlign="center";
-x.fillStyle=cssVar("--paper-line", "#F0DEC3"); rr(x,96,y+26,888,38,19); x.fill();
+x.fillStyle=cssVar("--paper-line", "#D8CBA3"); rr(x,96,y+26,888,38,19); x.fill();
 var pct=Math.round(d[4]*100), win=Math.max(pct,100-pct), w=888*win/100;
 x.fillStyle=d[5];
 if(d[4]>=0.5){ rr(x,96,y+26,w,38,19); } else { rr(x,96+888-w,y+26,w,38,19); }
 x.fill();
-x.fillStyle=cssVar("--paper-sub", "#6B5D4F"); x.font="800 32px 'M PLUS Rounded 1c', sans-serif";
+x.fillStyle=cssVar("--paper-sub", "#5D5C4C"); x.font="800 32px 'M PLUS Rounded 1c', sans-serif";
 x.fillText((d[4]>=0.5? d[2]: d[3])+" "+win+"%", 540, y+96);
 });
 /* フッター */
-x.fillStyle=cssVar("--paper-ink", "#2B2118"); x.font="800 40px 'M PLUS Rounded 1c', sans-serif";
+x.fillStyle=cssVar("--paper-ink", "#1D2A44"); x.font="800 40px 'M PLUS Rounded 1c', sans-serif";
 x.fillText("#顔写真MBTI診断 #MBTI", 540, 1768);
-x.fillStyle=cssVar("--paper-sub", "#6B5D4F"); x.font="700 32px 'M PLUS Rounded 1c', sans-serif";
+x.fillStyle=cssVar("--paper-sub", "#5D5C4C"); x.font="700 32px 'M PLUS Rounded 1c', sans-serif";
 x.fillText("「顔写真MBTI診断」で検索して遊んでみてね", 540, 1824);
 shareCanvas=c;
 if(done) done(c);
