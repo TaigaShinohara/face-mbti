@@ -260,7 +260,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 <body>
 <div class="wrap">
 
-<header class="hero">
+<header class="hero" id="heroHeader">
 <div class="hero-facets" aria-hidden="true"><svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMin slice"><polygon points="2,26 36,8 26,48" fill="#EE5346" opacity=".65"/><polygon points="26,48 58,32 46,72" fill="#0E7C8C" opacity=".55"/><polygon points="0,96 28,76 32,114" fill="#F2A03D" opacity=".6"/><polygon points="10,164 40,144 42,182" fill="#1D2A44" opacity=".45"/><polygon points="398,22 364,6 374,46" fill="#0E7C8C" opacity=".65"/><polygon points="374,46 342,30 354,70" fill="#EE5346" opacity=".55"/><polygon points="400,98 372,78 368,116" fill="#1D2A44" opacity=".45"/><polygon points="390,166 360,146 358,184" fill="#F2A03D" opacity=".6"/></svg></div>
 <span class="badge"><i></i>エンタメ診断</span>
 <h1>顔写真でわかる<br><span class="hl">MBTI</span><span class="hl2">診断</span></h1>
@@ -415,7 +415,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--focus-ring);o
 </section>
 
 <!-- 16 TYPES -->
-<section class="section">
+<section class="section" id="gallerySection">
 <h2>16タイプ図鑑</h2>
 
 <div class="type-grid" id="typeGrid"></div>
@@ -1054,6 +1054,7 @@ $("faceDataList").innerHTML =
 "<li><span>ディテール量</span><b>"+raw.detail+" / 100</b></li>";
 stagePreview.classList.add("hidden");
 stageResult.classList.add("show");
+$("heroHeader").classList.add("hidden"); $("gallerySection").classList.add("hidden");
 stageResult.scrollIntoView({behavior:"smooth", block:"start"});
 generateShareCard(function(c){ var pv=$("sharePreview"); pv.src=c.toDataURL("image/jpeg",0.88); pv.classList.remove("hidden"); });
 }
@@ -1079,7 +1080,7 @@ spawnConfetti();
 var advices=diffs.map(function(i){ return AXIS_ADVICE[i](target[i]); });
 $("missionResultTitle").textContent = matchCount>=3
 ? "あと少し！ 目標まで残り1文字"
-: "今回は "+code+" でした（4文字中"+matchCount+"文字一致）";
+: "目標まで 4文字中"+matchCount+"文字一致";
 $("missionResultText").textContent="目標は "+target+"（"+mt.name+"）。"+advices.join("／");
 }
 }
@@ -1135,6 +1136,7 @@ finishAnimation=null;
 closeTypeModal();
 var sc=$("stageCamera"); if(sc) sc.classList.add("hidden");
 stageResult.classList.remove("show");
+$("heroHeader").classList.remove("hidden"); $("gallerySection").classList.remove("hidden");
 stagePreview.classList.add("hidden");
 current.dataUrl=null; current.metrics=null; current.result=null; current.missionAchieved=false; shareCanvas=null; capturedDataUrl=null;
 previewImg.removeAttribute("src");
